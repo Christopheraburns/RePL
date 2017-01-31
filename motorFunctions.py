@@ -30,35 +30,10 @@ pygame.mixer.init()
 ack = Sound("audio/ack.wav")
 limit = Sound("audio/limit.wav")
 
-RIGHTSHOULDER = 0
-RIGHTELBOW = 0
-LEFTSOULDER = 0
-LEFTELBOW = 0
-RIGHTWHEEL = 0
-LEFTWHEEL = 0
-
 
 
 class Body(object):
     """A Body class encapulates the movements of appendages """
-
-    ###### Load GPIO Pin-to-joint-Mapping #####
-    if os.path.exists("JOINTMAP"):
-        with open("JOINTMAP") as f:
-            hcontent = f.readlines()
-            for line in hcontent:
-                entry = line.split();
-                if entry[0] == "RIGHTSHOULDER":
-                    RIGHTSHOULDER = entry[1]
-                elif entry[0] == "LEFTSHOULDER":
-                    LEFTSOULDER = entry[1]
-                elif entry[0] == "RIGHTELBOW":
-                    RIGHTELBOW =  entry[1]
-                elif entry[0] == "LEFTELBOW":
-                    LEFTELBOW = entry[1]
-
-    else:
-        logger.LogError("JOINTMAP file is missing - cannot Map joints to GPIO commands")
 
     # Turn warnings on or off
     try:
