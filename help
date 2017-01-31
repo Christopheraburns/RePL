@@ -1,0 +1,27 @@
+********* Available Commands ***********
+Commands can be typed into the consule in manual mode or spoken in voice mode.
+For voice commands see system requirements.
+Commands are not case sensitive
+
+HELP        - Displays this information
+IDENTIFY	- RePL will snap a still image at 640 X 480 in .png format.
+FOLLOW		- RePL will follow you, provided it is not impeded by obstacles.
+TALK		- RePL will have a conversation with you.
+LEFT 		- Left arm will be responsive - must also include a motion command for the left arm.
+RIGHT		- Right arm will be responsive - must also include a motion command for the right arm.
+SHUTDOWN    - RePL will shutdown
+
+Motion Commands (used with LEFT and RIGHT commands above):
+	UP		- Moves arm up
+	DOWN		- Moves arm down
+	OUT		- Moves arm parallel with the floor
+	BEND		- Bends arm at the elbow
+	STRAIGHT	- Straightens arm (at the elbow)
+
+
+example manual commands:
+LEFT UP
+RIGHT UP
+RIGHT BEND
+RIGHT STRAIGHT
+IDENTIFY
