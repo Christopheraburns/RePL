@@ -51,7 +51,7 @@ class Body(object):
 
         @staticmethod
         def moveDown():
-            if DEBUG: logger.LogDebug("moving LEFT arm (GPIO 13) to DOWN position")
+            logger.LogDebug("moving LEFT arm (GPIO 13) to DOWN position")
             try:
                 GPIO.setmode(GPIO.BOARD)
                 GPIO.setup(13, GPIO.OUT)
@@ -59,14 +59,13 @@ class Body(object):
                 dutyCycle = rightPosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
                 ack.play()
-                time.sleep(2)
             except Exception as e:
                 limit.play()
                 logger.LogError("An error has occured {}".format(e.message))
 
         @staticmethod
         def moveParallel():
-            if DEBUG: logger.LogDebug("moving LEFT arm (GPIO 13) to be parallel with floor (out)")
+            logger.LogDebug("moving LEFT arm (GPIO 13) to be parallel with floor (out)")
             try:
                 GPIO.setmode(GPIO.BOARD)
                 GPIO.setup(13, GPIO.OUT)
@@ -74,14 +73,13 @@ class Body(object):
                 dutyCycle = middlePosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
                 ack.play()
-                time.sleep(2)
             except Exception as e:
                 limit.play()
                 logger.LogError("An error has occured {}".format(e.message))
 
         @staticmethod
         def moveUp():
-            if DEBUG: logger.LogDebug("moving LEFT arm (GPIO 13) UP")
+            logger.LogDebug("moving LEFT arm (GPIO 13) UP")
             try:
                 GPIO.setmode(GPIO.BOARD)
                 GPIO.setup(13, GPIO.OUT)
@@ -89,14 +87,13 @@ class Body(object):
                 dutyCycle = leftPosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
                 ack.play()
-                time.sleep(2)
             except Exception as e:
                 limit.play()
                 logger.LogError("An error has occured: {}".format(e.message))
 
         @staticmethod
         def bend():
-            if DEBUG: logger.LogDebug("BENDing LEFT arm (GPIO 15)")
+            logger.LogDebug("BENDing LEFT arm (GPIO 15)")
             try:
                 GPIO.setmode(GPIO.BOARD)
                 GPIO.setup(15, GPIO.OUT)
@@ -104,14 +101,13 @@ class Body(object):
                 dutyCycle = leftPosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
                 ack.play()
-                time.sleep(2)
             except Exception as e:
                 limit.play()
                 logger.LogError("An error has occured: {}".format(e.message))
 
         @staticmethod
         def straighten():
-            if DEBUG: logger.LogDebug("STRAIGHTening LEFT arm (GPIO 15)")
+            logger.LogDebug("STRAIGHTening LEFT arm (GPIO 15)")
             try:
                 GPIO.setmode(GPIO.BOARD)
                 GPIO.setup(15, GPIO.OUT)
@@ -119,7 +115,6 @@ class Body(object):
                 dutyCycle = middlePosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
                 ack.play()
-                time.sleep(2)
             except Exception as e:
                 limit.play()
                 logger.LogError("An error has occured {}".format(e.message))
@@ -131,8 +126,8 @@ class Body(object):
             pass
 
         @staticmethod
-        def moveDown(self): #At Rest Position AKA Left Position of Servo on Right Shoulder
-            if DEBUG: logger.LogDebug("moving RIGHT arm (GPIO 12) to DOWN position")
+        def moveDown(): #At Rest Position AKA Left Position of Servo on Right Shoulder
+            logger.LogDebug("moving RIGHT arm (GPIO 12) to DOWN position")
             try:
                 GPIO.setmode(GPIO.BOARD)
                 GPIO.setup(12, GPIO.OUT)
@@ -140,14 +135,13 @@ class Body(object):
                 dutyCycle = leftPosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
                 ack.play()
-                time.sleep(2)
             except Exception as e:
                 limit.play()
-                logger.LogError("An error has occured {}", e)
+                logger.LogError("An error has occured {}".format(e))
 
         @staticmethod
-        def moveParallel(self): #Middle Position on Either Shoulder
-            if DEBUG: logger.LogDebug("move RIGHT arm (GPIO 12) to be parallel with floor (OUT)")
+        def moveParallel(): #Middle Position on Either Shoulder
+            logger.LogDebug("move RIGHT arm (GPIO 12) to be parallel with floor (OUT)")
             try:
                 GPIO.setmode(GPIO.BOARD)
                 GPIO.setup(12, GPIO.OUT)
@@ -155,15 +149,14 @@ class Body(object):
                 dutyCycle = middlePosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
                 ack.play()
-                time.sleep(2)
             except Exception as e:
                 limit.play()
-                print("An error has occured {}", e)
+                logger.LogError("An error has occured {}".format(e))
 
 
         @staticmethod
         def moveUp():
-            if DEBUG: logger.LogDebug("move RIGHT arm (GPIO 12) to UP position")
+            logger.LogDebug("move RIGHT arm (GPIO 12) to UP position")
             try:
                 GPIO.setmode(GPIO.BOARD)
                 GPIO.setup(12, GPIO.OUT)
@@ -171,14 +164,13 @@ class Body(object):
                 dutyCycle = rightPosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
                 ack.play()
-                time.sleep(2)
             except Exception as e:
                 limit.play()
-                print("An error has occured {}", e)
+                logger.LogError("An error has occured {}".format(e))
 
         @staticmethod
         def bend():
-            if DEBUG: logger.LogDebug("BENDing RIGHT arm (GPIO 11)")
+            logger.LogDebug("BENDing RIGHT arm (GPIO 11)")
             try:
                 GPIO.setmode(GPIO.BOARD)
                 GPIO.setup(11, GPIO.OUT)
@@ -186,14 +178,13 @@ class Body(object):
                 dutyCycle = rightPosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
                 ack.play()
-                time.sleep(2)
             except Exception as e:
                 limit.play()
-                print("An error has occured {}", e)
+                logger.LogError("An error has occured {}".format(e))
 
         @staticmethod
         def straighten():
-            if DEBUG: logger.LogDebug("STRAIGHTening RIGHT arm (GPIO 11)")
+            logger.LogDebug("STRAIGHTening RIGHT arm (GPIO 11)")
             try:
                 GPIO.setmode(GPIO.BOARD)
                 GPIO.setup(11, GPIO.OUT)
@@ -201,10 +192,9 @@ class Body(object):
                 dutyCycle = middlePosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
                 ack.play()
-                time.sleep(2)
             except Exception as e:
                 limit.play()
-                print("An error has occured {}", e)
+                logger.LogError("An error has occured {}".format(e))
 
 
 

@@ -23,25 +23,25 @@ class rLog(object):
 
     def LogThis(self, message):
         ts = time.time()
-        logging.info(datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S') + ":: " + message)
+        logging.info(str(ts) + ":: " + message)
         print(message)
 
     def LogDebug(self, message):
         ts = time.time()
-        logging.debug(datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S') + ":: " + message)
+        logging.debug(str(ts) + ":: " + message)
         print("DEBUG: {}".format(message))
 
     def LogWarning(self, message):
         ts = time.time()
-        logging.warning(datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S') + ":: " + message)
+        logging.warning(str(ts) + ":: " + message)
         print("WARNING: {}".format(message))
 
     def LogError(self, message):
         ts = time.time()
-        logging.error(datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S') + ":: " + message)
+        logging.error(str(ts) + ":: " + message)
         print("ERROR: {}".format(message))
 
     def LogCritical(self, message):
         ts = time.time()
-        logging.critical(datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S') + ":: " + message)
+        logging.critical(str(ts) + ":: " + message)
         print("CRITICAL: {}".format(message))

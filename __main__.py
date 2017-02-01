@@ -1,6 +1,6 @@
 import motorFunctions as mf
 import computerVision as cv
-import speech_recognition as sr
+import speechrecognition as sr
 from boto3 import Session
 from botocore.exceptions import BotoCoreError, ClientError
 from contextlib import closing
@@ -8,6 +8,7 @@ import os.path
 import sys
 import subprocess
 import Log
+import time
 from tempfile import gettempdir
 
 #Create a logger object
@@ -31,10 +32,10 @@ def showHelp():
             for line in hcontent:
                 print(line)
     else:
-        logger.LogError("help file is missing - cannot display commands")
+        logger.LogError("__main__.py: Help file is missing - cannot display commands")
 
 
-def processCmd(command):
+def processCmd(command, voice):
     if command:
         logger.LogThis("recieved command: {}".format(command))
         command = command.lower()
@@ -107,50 +108,53 @@ def processCmd(command):
     else:
         logger.LogError("Nothing returned from Voice to Text service!")
 
-    main()
+    if not voice:
+        main(False)
 
 
 def listenVoiceCmd():
+    strValue = None
     try:
-        logger.LogThis("NLU Service starting...silence please..")
+        logger.LogThis("__main__.py: NLU Service starting...silence please..")
         with m as source: r.adjust_for_ambient_noise((source))
-        logger.LogThis("Set min energy threshold to {}".format(r.energy_threshold))
+        logger.LogThis("__main__.py: Set min energy threshold to {}".format(r.energy_threshold))
         while True:
-            logger.LogThis("You may not issue voice commands!")
+            logger.LogThis("__main__.py: You may now issue voice commands!")
             with m as source: audio = r.listen(source)
 
-            logger.LogThis ("Received audio data. Attempting to translate Voice to Text now...")
+            logger.LogThis ("__main__.py: Received audio data. Attempting to translate Voice to Text now...")
             try:
                 #value = r.recognize_sphinx(audio)
                 value = r.recognize_google(audio)
 
-                strValue = None
                 if str is bytes:  # this version of Python uses bytes for strings (Python 2)
                     #print(u"You said {}".format(value).encode("utf-8"))
                     strValue = value.encode("utf-8")
                 else:  # this version of Python uses unicode for strings (Python 3+)
                     #print("You said {}".format(value))
                     strValue = value
-                    processCmd(strValue)
+
+                logger.LogThis("__main__.py: Translation Service returned: {}".format(strValue))
+                processCmd(strValue, True)
+                time.sleep(5)
             except sr.UnknownValueError as e:
-                logger.LogError("Unable to translate audio: {}".format(e.message))
+                logger.LogError("__main__.py: TranslateServiceError: Unable to translate audio: {}".format(e.message))
+                pass
             except sr.RequestError as e:
-                logger.LogError("Unable to access NLP service {}".format(e.message))
+                logger.LogError("__main__.py: TranslateServiceError: Unable to access NLP service {}".format(e.message))
+                pass
 
-            try:
-                response = polly.synthesize_speech(Text=strValue, OutputFormat="mp3", VoiceId="Emma")
-            except(BotoCoreError, ClientError) as e:
-                logger.LogError("Error: {}".format(e))
-                sys.exit(-1)
     except KeyboardInterrupt:
-        pass
+        sys.exit(-1)
+
+    main(False)
 
 
-def main():
+def main(init):
 
     if len(sys.argv) == 1:
-        logger.LogThis("No parameters found, defaulting to manual mode.  Try -h for help")
-
+        if init:
+            logger.LogThis("No parameters found, defaulting to manual mode.  Try -h for help")
     if "voice" in sys.argv:
         listenVoiceCmd()
     elif "help" in sys.argv:
@@ -163,36 +167,36 @@ def main():
         command = command.lower()
         processCmd(command)
 
+def talkToPolly(strValue):
+    try:
+        response = polly.synthesize_speech(Text=strValue, OutputFormat="mp3", VoiceId="Emma")
+        if "AudioStream" in response:
+            with closing(response["AudioStream"]) as stream:
+                output = os.path.join("speech.mp3")
+                try:
+                    # Open a file for writing the output as a binary stream
+                    logger.LogThis("__main__.py: writing the response to MP3 file...")
+                    with open(output, "wb") as file:
+                        file.write(stream.read())
+                except IOError as e:
+                    # Could not write to file, exit gracefully
+                    logger.LogError(e.message)
+                    sys.exit(-1)
+        else:
+            # The response didn't contain audio data, exit gracefully
+            logger.LogThis("__main__.py: Response did not contain audio!")
+            sys.exit(-1)
 
-
-#TODO Audio stuff for responding with VOICE
-"""if "AudioStream" in response:
-                  with closing(response["AudioStream"]) as stream:
-                      output = os.path.join("speech.mp3")
-
-                      try:
-                          # Open a file for writing the output as a binary stream
-                          print("writing the response to MP3 file...")
-                          with open(output, "wb") as file:
-                              file.write(stream.read())
-                      except IOError as error:
-                          # Could not write to file, exit gracefully
-                          print(error)
-                          sys.exit(-1)
-              else:
-                  # The response didn't contain audio data, exit gracefully
-                  print ("Could not stream audio")
-                  sys.exit(-1)
-
-              # play the audio using the platform's default player
-              print("...mimic-ing")
-              if sys.platform == "win32":
-                  os.startfile(output)
-              else:
-                  # The following works on mac and linux. (Darwin = mac, xdg-open = linux).
-                  opener = "open" if sys.platform == "darwin" else "xdg-open"
-                  subprocess.call([opener, output])"""
-
+            # play the audio using the platform's default player
+            if sys.platform == "win32":
+                os.startfile(output)
+            else:
+                # The following works on mac and linux. (Darwin = mac, xdg-open = linux).
+                opener = "open" if sys.platform == "darwin" else "xdg-open"
+                subprocess.call([opener, output])
+    except(BotoCoreError, ClientError) as e:
+        logger.LogError("Error: {}".format(e))
+        sys.exit(-1)
 #Main
 if __name__ == "__main__":
-    main()
+    main(True)
