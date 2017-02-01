@@ -15,7 +15,7 @@ logger = Log.rLog(False)
 try: #Attempt to Load RPi module - will only work on Pi
     import RPi.GPIO as GPIO
 except ImportError as e:
-    logger.LogError("Cannot import the RPi module, install it with pip or this may not be a Raspberry Pi")
+    logger.LogError("motorFunctions.py: Cannot import the RPi module, install it with pip or this may not be a Raspberry Pi")
 
 DEBUG = False
 frequencyHertz = 50  # PWm Frequency
@@ -51,7 +51,7 @@ class Body(object):
 
         @staticmethod
         def moveDown():
-            logger.LogDebug("moving LEFT arm (GPIO 13) to DOWN position")
+            logger.LogThis("motorFunctions.py: moving LEFT arm (GPIO 13) to DOWN position")
             try:
                 GPIO.setmode(GPIO.BOARD)
                 GPIO.setup(13, GPIO.OUT)
@@ -59,13 +59,14 @@ class Body(object):
                 dutyCycle = rightPosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
                 ack.play()
+                time.sleep(2)
             except Exception as e:
                 limit.play()
-                logger.LogError("An error has occured {}".format(e.message))
+                logger.LogError("motorFunctions.py: An error has occured {}".format(e.message))
 
         @staticmethod
         def moveParallel():
-            logger.LogDebug("moving LEFT arm (GPIO 13) to be parallel with floor (out)")
+            logger.LogThis("motorFunctions.py: moving LEFT arm (GPIO 13) to be parallel with floor (out)")
             try:
                 GPIO.setmode(GPIO.BOARD)
                 GPIO.setup(13, GPIO.OUT)
@@ -73,13 +74,14 @@ class Body(object):
                 dutyCycle = middlePosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
                 ack.play()
+                time.sleep(2)
             except Exception as e:
                 limit.play()
-                logger.LogError("An error has occured {}".format(e.message))
+                logger.LogError("motorFunctions.py: An error has occured {}".format(e.message))
 
         @staticmethod
         def moveUp():
-            logger.LogDebug("moving LEFT arm (GPIO 13) UP")
+            logger.LogThis("motorFunctions.py: moving LEFT arm (GPIO 13) UP")
             try:
                 GPIO.setmode(GPIO.BOARD)
                 GPIO.setup(13, GPIO.OUT)
@@ -87,13 +89,14 @@ class Body(object):
                 dutyCycle = leftPosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
                 ack.play()
+                time.sleep(2)
             except Exception as e:
                 limit.play()
-                logger.LogError("An error has occured: {}".format(e.message))
+                logger.LogError("motorFunctions.py: An error has occured: {}".format(e.message))
 
         @staticmethod
         def bend():
-            logger.LogDebug("BENDing LEFT arm (GPIO 15)")
+            logger.LogThis("motorFunctions.py: BENDing LEFT arm (GPIO 15)")
             try:
                 GPIO.setmode(GPIO.BOARD)
                 GPIO.setup(15, GPIO.OUT)
@@ -101,13 +104,14 @@ class Body(object):
                 dutyCycle = leftPosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
                 ack.play()
+                time.sleep(2)
             except Exception as e:
                 limit.play()
-                logger.LogError("An error has occured: {}".format(e.message))
+                logger.LogError("motorFunctions.py: An error has occured: {}".format(e.message))
 
         @staticmethod
         def straighten():
-            logger.LogDebug("STRAIGHTening LEFT arm (GPIO 15)")
+            logger.LogThis("motorFunctions.py: STRAIGHTening LEFT arm (GPIO 15)")
             try:
                 GPIO.setmode(GPIO.BOARD)
                 GPIO.setup(15, GPIO.OUT)
@@ -115,9 +119,10 @@ class Body(object):
                 dutyCycle = middlePosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
                 ack.play()
+                time.sleep(2)
             except Exception as e:
                 limit.play()
-                logger.LogError("An error has occured {}".format(e.message))
+                logger.LogError("motorFunctions.py: An error has occured {}".format(e.message))
 
 
     class RightArm():
@@ -127,7 +132,7 @@ class Body(object):
 
         @staticmethod
         def moveDown(): #At Rest Position AKA Left Position of Servo on Right Shoulder
-            logger.LogDebug("moving RIGHT arm (GPIO 12) to DOWN position")
+            logger.LogThis("motorFunctions.py: moving RIGHT arm (GPIO 12) to DOWN position")
             try:
                 GPIO.setmode(GPIO.BOARD)
                 GPIO.setup(12, GPIO.OUT)
@@ -135,13 +140,14 @@ class Body(object):
                 dutyCycle = leftPosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
                 ack.play()
+                time.sleep(2)
             except Exception as e:
                 limit.play()
-                logger.LogError("An error has occured {}".format(e))
+                logger.LogError("motorFunctions.py: An error has occured {}".format(e))
 
         @staticmethod
         def moveParallel(): #Middle Position on Either Shoulder
-            logger.LogDebug("move RIGHT arm (GPIO 12) to be parallel with floor (OUT)")
+            logger.LogThis("motorFunctions.py: move RIGHT arm (GPIO 12) to be parallel with floor (OUT)")
             try:
                 GPIO.setmode(GPIO.BOARD)
                 GPIO.setup(12, GPIO.OUT)
@@ -149,14 +155,15 @@ class Body(object):
                 dutyCycle = middlePosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
                 ack.play()
+                time.sleep(2)
             except Exception as e:
                 limit.play()
-                logger.LogError("An error has occured {}".format(e))
+                logger.LogError("motorFunctions.py: An error has occured {}".format(e))
 
 
         @staticmethod
         def moveUp():
-            logger.LogDebug("move RIGHT arm (GPIO 12) to UP position")
+            logger.LogThis("motorFunctions.py: move RIGHT arm (GPIO 12) to UP position")
             try:
                 GPIO.setmode(GPIO.BOARD)
                 GPIO.setup(12, GPIO.OUT)
@@ -164,13 +171,14 @@ class Body(object):
                 dutyCycle = rightPosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
                 ack.play()
+                time.sleep(2)
             except Exception as e:
                 limit.play()
-                logger.LogError("An error has occured {}".format(e))
+                logger.LogError("motorFunctions.py: An error has occured {}".format(e))
 
         @staticmethod
         def bend():
-            logger.LogDebug("BENDing RIGHT arm (GPIO 11)")
+            logger.LogThis("motorFunctions.py: BENDing RIGHT arm (GPIO 11)")
             try:
                 GPIO.setmode(GPIO.BOARD)
                 GPIO.setup(11, GPIO.OUT)
@@ -178,13 +186,14 @@ class Body(object):
                 dutyCycle = rightPosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
                 ack.play()
+                time.sleep(2)
             except Exception as e:
                 limit.play()
-                logger.LogError("An error has occured {}".format(e))
+                logger.LogError("motorFunctions.py: An error has occured {}".format(e))
 
         @staticmethod
         def straighten():
-            logger.LogDebug("STRAIGHTening RIGHT arm (GPIO 11)")
+            logger.LogThis("motorFunctions.py: STRAIGHTening RIGHT arm (GPIO 11)")
             try:
                 GPIO.setmode(GPIO.BOARD)
                 GPIO.setup(11, GPIO.OUT)
@@ -192,9 +201,10 @@ class Body(object):
                 dutyCycle = middlePosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
                 ack.play()
+                time.sleep(2)
             except Exception as e:
                 limit.play()
-                logger.LogError("An error has occured {}".format(e))
+                logger.LogError("motorFunctions.py: An error has occured {}".format(e))
 
 
 

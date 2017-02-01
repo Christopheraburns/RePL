@@ -14,6 +14,7 @@ class rLog(object):
         if init:
             logging.getLogger("RePLLog")
             logging.basicConfig(filename=LOGFILE, level=logging.DEBUG)
+            logging.info("")
             logging.info("*******************New RePL instance booting!***********************************")
             logging.info("********************************************************************************")
             logging.info("")

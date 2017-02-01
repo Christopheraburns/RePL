@@ -9,19 +9,20 @@ import sys
 import subprocess
 import Log
 import time
-from tempfile import gettempdir
+import pygame.mixer
+from pygame.mixer import Sound
+
 
 #Create a logger object
 logger = Log.rLog(True)
-
-DEBUG = False
+limit = Sound("audio/limit.wav")
 
 #Create an AWS Client obj
 session = Session(profile_name="default")
 polly = session.client("polly")
 r = sr.Recognizer()
 m = sr.Microphone()
-Robot = mf.Body();
+Robot = mf.Body()
 
 #Does not get logged
 def showHelp():
@@ -32,71 +33,72 @@ def showHelp():
             for line in hcontent:
                 print(line)
     else:
+        limit.play()
         logger.LogError("__main__.py: Help file is missing - cannot display commands")
 
 
 def processCmd(command, voice):
     if command:
-        logger.LogThis("recieved command: {}".format(command))
+        logger.LogThis("__main__.py: recieved command: {}".format(command))
         command = command.lower()
-        if "right" in command:
-            if DEBUG: logger.LogDebug("keyword RIGHT detected, creating rightArm object")
+        if "right" in command or "write" in command:
+            logger.LogThis("__main__.py: Keyword RIGHT (or WRITE) detected, creating rightArm object")
             rightArm = Robot.RightArm()
-            if "up" in command:
-                if DEBUG: logger.LogDebug("keyword UP found, calling rightArm.moveUp()")
+            if "up" in command or "raise" in command:
+                logger.LogThis("__main__.py: OPTION 1: Keyword UP (or RAISE) detected, calling rightArm.moveUp()")
                 rightArm.moveUp()
             elif "down" in command:
-                if DEBUG: logger.LogDebug("keyword DOWN found, calling rightArm.moveDown()")
+                logger.LogThis("__main__.py: OPTION 2: Keyword DOWN detected, calling rightArm.moveDown()")
                 rightArm.moveDown()
             elif "out" in command:
-                if DEBUG: logger.LogDebug("keyword OUT found, calling rightArm.moveParallel()")
+                logger.LogThis("__main__.py: OPTION 3: Keyword OUT detected, calling rightArm.moveParallel()")
                 rightArm.moveParallel()
             elif "bend" in command:
-                if DEBUG: logger.LogDebug("keyword BEND found, calling rightArm.bend()")
+                logger.LogThis("__main__.py: OPTION 4: Keyword BEND detected, calling rightArm.bend()")
                 rightArm.bend()
             elif "straight" in command:
-                if DEBUG: logger.LogDebug("keyword STRAIGHT found, calling rightArm.straighten()")
+                logger.LogThis("__main__.py: OPTION 5: Keyword STRAIGHT detected, calling rightArm.straighten()")
                 rightArm.straighten()
         elif "left" in command:
-            if DEBUG: logger.LogDebug("keyword LEFT found, creating leftArm object")
+            logger.LogThis("__main__.py: Keyword LEFT detected, creating leftArm object")
             leftArm = Robot.LeftArm()
-            if "up" in command:
-                if DEBUG: logger.LogDebug("keyword UP found, calling leftArm.moveUp()")
+            if "up" in command or "raise" in command:
+                logger.LogThis("__main__.py: OPTION 6 :Keyword UP detected, calling leftArm.moveUp()")
                 leftArm.moveUp()
             elif "down" in command:
-                if DEBUG: logger.LogDebug("keyword DOWN found, calling leftArm.moveDown()")
+                logger.LogThis("__main__.py: OPTION 7: Keyword DOWN detected, calling leftArm.moveDown()")
                 leftArm.moveDown()
             elif "out"in command:
-                if DEBUG: logger.LogDebug("keyword OUT found, calling leftArm.moveParallel()")
+                logger.LogThis("__main__.py: OPTION 8: Keyword OUT detected, calling leftArm.moveParallel()")
                 leftArm.moveParallel()
             elif "bend" in command:
-                if DEBUG: logger.LogDebug("keyword BEND found, calling leftArm.bend()")
+                logger.LogThis("__main__.py: OPTION 9: Keyword BEND detected, calling leftArm.bend()")
                 leftArm.bend()
             elif "straight" in command:
-                if DEBUG: logger.LogDebug("keyword STRAIGHT found, calling leftArm.straighten()")
+                logger.LogThis("__main__.py: OPTION 10: Keyword STRAIGHT detected, calling leftArm.straighten()")
                 leftArm.straighten()
-        elif "both" in command:
-            if DEBUG: logger.LogDebug("keyword BOTH found, creating leftArm & rightArm objects")
+        elif "both" in command or "arms" in command:
+            logger.LogThis("__main__.py: Keyword BOTH or ARMS detected, creating leftArm & rightArm objects")
             rightArm = Robot.RightArm()
             leftArm = Robot.LeftArm()
-            if "up" in command:
-                if DEBUG: logger.LogDebug("keyword UP found, calling leftArm.moveUp() & rightArm.moveUp()")
+            if "up" in command or "raise" in command:
+                logger.LogThis("__main__.py: OPTION 11: Keyword UP or RAISE detected, calling leftArm.moveUp() & rightArm.moveUp()")
                 leftArm.moveUp()
                 rightArm.moveUp()
             elif "down" in command:
-                if DEBUG: logger.LogDebug("keyword DOWN found, calling leftArm.moveDown() & rightArm.moveDown()")
+                logger.LogThis("__main__.py: OPTION 12: Keyword DOWN detected, calling leftArm.moveDown() & rightArm.moveDown()")
                 leftArm.moveDown()
                 rightArm.moveDown()
             elif "out" in command:
-                if DEBUG: logger.LogDebug("keyword OUT found, calling leftArm.moveParallel() & rightArm.moveParallel()")
+                logger.LogThis("__main__.py: OPTION 13: Keyword OUT detected, calling leftArm.moveParallel() & rightArm.moveParallel()")
                 leftArm.moveParallel()
-                rightArm.moveDown()
+                rightArm.moveParallel()
             elif "bend" in command:
-                if DEBUG: logger.LogDebug("keyword BEND found, calling leftArm.bend() & rightArm.bend()")
+                logger.LogThis("__main__.py: OPTION 14: Keyword BEND detected, calling leftArm.bend() & rightArm.bend()")
                 leftArm.bend()
                 rightArm.bend()
             elif "straight" in command:
-                if DEBUG: logger.LogDebug("keyword STRAIGHT found, calling leftArm.straighten() & rightArm.straighten()")
+                logger.LogThis("__main__.py: OPTION 15: Keyword STRAIGHT detected, calling leftArm.straighten() & rightArm.straighten()")
                 leftArm.straighten()
                 rightArm.straighten()
         elif 'help' in command:
@@ -105,11 +107,51 @@ def processCmd(command, voice):
             exit()
         elif "identify" in command:
             cv.Vision.takeSinglePicture()
+        else:
+            pass
     else:
-        logger.LogError("Nothing returned from Voice to Text service!")
+        logger.LogError("__main__.py: Nothing returned from Voice to Text service!")
 
     if not voice:
         main(False)
+
+
+def repeatCmd(value):
+    try:
+        logger.LogThis("__main__.py: Contacting polly to convert command to voice")
+        response = polly.synthesize_speech(Text=value, OutputFormat="ogg_vorbis", VoiceId="Emma")
+        if "AudioStream" in response:
+            with closing(response["AudioStream"]) as stream:
+                output = os.path.join("speech.ogg")
+                try:
+                    # Open a file for writing the output as a binary stream
+                    logger.LogThis("__main__.py: writing the response to speech.ogg.")
+                    with open(output, "wb") as file:
+                        file.write(stream.read())
+
+                        """"# play the audio using the platform's default player
+                        if sys.platform == "win32":
+                            os.startfile(output)
+                        else:
+                            # The following works on mac and linux. (Darwin = mac, xdg-open = linux).
+                            opener = "open" if sys.platform == "darwin" else "xdg-open"
+                            subprocess.call([opener, output])"""
+
+                    pygame.mixer.init()
+                    cmd = Sound("speech.ogg")
+                    cmd.play()
+                except IOError as e:
+                    # Could not write to file
+                    limit.play()
+                    logger.LogError("__main__.py: IOError: {}".format(e.message))
+        else:
+            # The response didn't contain audio data, exit gracefully
+            logger.LogThis("__main__.py: Response did not contain audio!")
+
+    except(BotoCoreError, ClientError) as e:
+        limit.play()
+        logger.LogError("__main__.py: Error: {}".format(e))
+
 
 
 def listenVoiceCmd():
@@ -134,13 +176,15 @@ def listenVoiceCmd():
                     #print("You said {}".format(value))
                     strValue = value
 
-                logger.LogThis("__main__.py: Translation Service returned: {}".format(strValue))
+                logger.LogThis("__main__.py: Vocie-to-Text translation Service returned: {}".format(strValue))
                 processCmd(strValue, True)
-                time.sleep(5)
+                repeatCmd(strValue)
             except sr.UnknownValueError as e:
+                limit.play()
                 logger.LogError("__main__.py: TranslateServiceError: Unable to translate audio: {}".format(e.message))
                 pass
             except sr.RequestError as e:
+                limit.play()
                 logger.LogError("__main__.py: TranslateServiceError: Unable to access NLP service {}".format(e.message))
                 pass
 
@@ -154,49 +198,16 @@ def main(init):
 
     if len(sys.argv) == 1:
         if init:
-            logger.LogThis("No parameters found, defaulting to manual mode.  Try -h for help")
+            logger.LogThis("__main__.py: No parameters found, defaulting to manual mode.  Try -h for help")
     if "voice" in sys.argv:
         listenVoiceCmd()
     elif "help" in sys.argv:
         showHelp()
-    elif "debug" in sys.argv:
-        DEBUG = True
-        Robot.debugMode(True)
     else:
         command = raw_input("Enter a command:")
         command = command.lower()
-        processCmd(command)
+        processCmd(command, False)
 
-def talkToPolly(strValue):
-    try:
-        response = polly.synthesize_speech(Text=strValue, OutputFormat="mp3", VoiceId="Emma")
-        if "AudioStream" in response:
-            with closing(response["AudioStream"]) as stream:
-                output = os.path.join("speech.mp3")
-                try:
-                    # Open a file for writing the output as a binary stream
-                    logger.LogThis("__main__.py: writing the response to MP3 file...")
-                    with open(output, "wb") as file:
-                        file.write(stream.read())
-                except IOError as e:
-                    # Could not write to file, exit gracefully
-                    logger.LogError(e.message)
-                    sys.exit(-1)
-        else:
-            # The response didn't contain audio data, exit gracefully
-            logger.LogThis("__main__.py: Response did not contain audio!")
-            sys.exit(-1)
-
-            # play the audio using the platform's default player
-            if sys.platform == "win32":
-                os.startfile(output)
-            else:
-                # The following works on mac and linux. (Darwin = mac, xdg-open = linux).
-                opener = "open" if sys.platform == "darwin" else "xdg-open"
-                subprocess.call([opener, output])
-    except(BotoCoreError, ClientError) as e:
-        logger.LogError("Error: {}".format(e))
-        sys.exit(-1)
 #Main
 if __name__ == "__main__":
     main(True)
