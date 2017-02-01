@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e7f94db-d1e5-4d2b-bf1b-53e9b60245e3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/__init__.py" afterPath="$PROJECT_DIR$/speechrecognition.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Log.py" afterPath="$PROJECT_DIR$/Log.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/__main__.py" afterPath="$PROJECT_DIR$/__main__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motorFunctions.py" afterPath="$PROJECT_DIR$/motorFunctions.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -23,7 +17,7 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="__main__.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="__main__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/__main__.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="713">
@@ -48,11 +42,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="speechrecognition.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="speechrecognition.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/speechrecognition.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5763">
-              <caret line="1039" column="46" lean-forward="true" selection-start-line="1039" selection-start-column="46" selection-end-line="1039" selection-end-column="46" />
+            <state relative-caret-position="446">
+              <caret line="1067" column="64" lean-forward="false" selection-start-line="1067" selection-start-column="59" selection-end-line="1067" selection-end-column="64" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
                 <element signature="e#5127#12960#0" expanded="false" />
@@ -69,7 +63,6 @@
                 <element signature="e#48584#54208#0" expanded="false" />
                 <element signature="e#54296#56179#0" expanded="false" />
                 <element signature="e#56289#62103#0" expanded="false" />
-                <element signature="e#65891#67420#0" expanded="false" />
                 <element signature="e#67449#67707#0" expanded="false" />
                 <element signature="e#67986#69600#0" expanded="false" />
               </folding>
@@ -457,19 +450,33 @@
       <option name="project" value="LOCAL" />
       <updated>1485829992494</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="changed from CMUSphinx to Google translate&#10;Update logging">
+      <created>1485909753888</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1485909753888</updated>
+    </task>
+    <task id="LOCAL-00003" summary="changed from CMUSphinx to Google translate&#10;Update logging">
+      <created>1485914185892</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1485914185892</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="27" y="11" width="1744" height="1033" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15046297" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -492,7 +499,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="removed JointMap code" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed JointMap code" />
+    <MESSAGE value="changed from CMUSphinx to Google translate&#10;Update logging" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed from CMUSphinx to Google translate&#10;Update logging" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -542,7 +550,6 @@
             <element signature="e#48584#54208#0" expanded="false" />
             <element signature="e#54296#56179#0" expanded="false" />
             <element signature="e#56289#62103#0" expanded="false" />
-            <element signature="e#65891#67420#0" expanded="false" />
             <element signature="e#67449#67707#0" expanded="false" />
             <element signature="e#67986#69600#0" expanded="false" />
           </folding>
@@ -683,7 +690,7 @@
         <state relative-caret-position="-8262">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#137#146#0" expanded="true" />
+            <element signature="e#137#146#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -698,10 +705,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/__main__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="713">
+          <caret line="149" column="15" lean-forward="true" selection-start-line="149" selection-start-column="15" selection-end-line="149" selection-end-column="15" />
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
+            <element signature="e#1066#2008#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/speechrecognition.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5763">
-          <caret line="1039" column="46" lean-forward="true" selection-start-line="1039" selection-start-column="46" selection-end-line="1039" selection-end-column="46" />
+        <state relative-caret-position="446">
+          <caret line="1067" column="64" lean-forward="false" selection-start-line="1067" selection-start-column="59" selection-end-line="1067" selection-end-column="64" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
             <element signature="e#5127#12960#0" expanded="false" />
@@ -718,20 +736,8 @@
             <element signature="e#48584#54208#0" expanded="false" />
             <element signature="e#54296#56179#0" expanded="false" />
             <element signature="e#56289#62103#0" expanded="false" />
-            <element signature="e#65891#67420#0" expanded="false" />
             <element signature="e#67449#67707#0" expanded="false" />
             <element signature="e#67986#69600#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/__main__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="713">
-          <caret line="149" column="15" lean-forward="true" selection-start-line="149" selection-start-column="15" selection-end-line="149" selection-end-column="15" />
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-            <element signature="e#1066#2008#0" expanded="false" />
           </folding>
         </state>
       </provider>
