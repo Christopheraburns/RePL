@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e7f94db-d1e5-4d2b-bf1b-53e9b60245e3" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/snowboydecoder.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/snowboydetect.py" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/resources/ding.wav" afterPath="$PROJECT_DIR$/audio/ding.wav" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Log.py" afterPath="$PROJECT_DIR$/Log.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/__main__.py" afterPath="$PROJECT_DIR$/__main__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snowboydecoder.py" afterPath="$PROJECT_DIR$/snowboydecoder.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -25,7 +26,7 @@
             <file leaf-file-name="demo.py" pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/demo.py">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="422">
+                  <state relative-caret-position="493">
                     <caret line="29" column="11" lean-forward="true" selection-start-line="29" selection-start-column="11" selection-end-line="29" selection-end-column="11" />
                     <folding>
                       <element signature="e#0#21#0" expanded="true" />
@@ -42,26 +43,45 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="__main__.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="__main__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/__main__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="230" column="28" lean-forward="true" selection-start-line="230" selection-start-column="28" selection-end-line="230" selection-end-column="28" />
+            <state relative-caret-position="-665">
+              <caret line="216" column="30" lean-forward="true" selection-start-line="216" selection-start-column="30" selection-end-line="216" selection-end-column="30" />
               <folding>
                 <element signature="e#0#27#0" expanded="true" />
-                <element signature="e#1145#1473#0" expanded="false" />
+                <element signature="e#1551#1879#0" expanded="false" />
+                <element signature="e#1911#2320#0" expanded="false" />
+                <element signature="e#2357#2973#1" expanded="false" />
+                <element signature="e#3127#4832#0" expanded="false" />
+                <element signature="e#3200#3327#0" expanded="false" />
+                <element signature="e#4967#7559#0" expanded="false" />
+                <element signature="e#7895#12122#0" expanded="false" />
+                <element signature="e#12150#13844#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Log.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Log.py">
+      <file leaf-file-name="snowboydecoder.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/snowboydecoder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="19" column="28" lean-forward="false" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
+            <state relative-caret-position="187">
+              <caret line="11" column="24" lean-forward="false" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
               <folding>
-                <element signature="e#77#91#0" expanded="true" />
+                <element signature="e#23#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="motorFunctions.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/motorFunctions.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1700">
+              <caret line="32" column="0" lean-forward="true" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+              <folding>
+                <element signature="e#109#120#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -70,7 +90,7 @@
       <file leaf-file-name="speechrecognition.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/speechrecognition.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6239">
+            <state relative-caret-position="384">
               <caret line="1067" column="64" lean-forward="false" selection-start-line="1067" selection-start-column="59" selection-end-line="1067" selection-end-column="64" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -90,18 +110,6 @@
                 <element signature="e#56289#62103#0" expanded="false" />
                 <element signature="e#67449#67707#0" expanded="false" />
                 <element signature="e#67986#69600#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="motorFunctions.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/motorFunctions.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="26" column="77" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-              <folding>
-                <element signature="e#109#120#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -138,11 +146,12 @@
         <option value="$PROJECT_DIR$/JOINTMAP" />
         <option value="$PROJECT_DIR$/__init__.py" />
         <option value="$PROJECT_DIR$/speechrecognition.py" />
-        <option value="$PROJECT_DIR$/Log.py" />
         <option value="$PROJECT_DIR$/motorFunctions.py" />
         <option value="$PROJECT_DIR$/snowboydetect.py" />
         <option value="$PROJECT_DIR$/ledEyes.py" />
+        <option value="$PROJECT_DIR$/Log.py" />
         <option value="$PROJECT_DIR$/__main__.py" />
+        <option value="$PROJECT_DIR$/snowboydecoder.py" />
       </list>
     </option>
   </component>
@@ -153,9 +162,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="79" />
+    <option name="x" value="50" />
     <option name="y" value="6" />
-    <option name="width" value="1800" />
+    <option name="width" value="1540" />
     <option name="height" value="1041" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -205,6 +214,11 @@
         <option name="myUseModuleSdk" value="true" />
       </console-settings>
     </option>
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Chris\PycharmProjects\RePLMotorFunctions\audio" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
@@ -461,14 +475,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="79" y="6" width="1800" height="1041" extended-state="0" />
+    <frame x="50" y="6" width="1540" height="1041" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14573991" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17060368" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34371644" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19226637" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16016427" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -515,7 +529,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="5" />
+      <option name="time" value="8" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -526,7 +540,14 @@
           <caret line="203" column="5" lean-forward="false" selection-start-line="203" selection-start-column="4" selection-end-line="203" selection-end-column="28" />
           <folding>
             <element signature="e#0#27#0" expanded="true" />
-            <element signature="e#1145#1473#0" expanded="false" />
+            <element signature="e#1551#1879#0" expanded="false" />
+            <element signature="e#1911#2320#0" expanded="false" />
+            <element signature="e#2357#2973#1" expanded="false" />
+            <element signature="e#3127#4832#0" expanded="false" />
+            <element signature="e#3200#3327#0" expanded="false" />
+            <element signature="e#4967#7559#0" expanded="false" />
+            <element signature="e#7895#12122#0" expanded="false" />
+            <element signature="e#12150#13844#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -609,7 +630,14 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#27#0" expanded="true" />
-            <element signature="e#1145#1473#0" expanded="false" />
+            <element signature="e#1551#1879#0" expanded="false" />
+            <element signature="e#1911#2320#0" expanded="false" />
+            <element signature="e#2357#2973#1" expanded="false" />
+            <element signature="e#3127#4832#0" expanded="false" />
+            <element signature="e#3200#3327#0" expanded="false" />
+            <element signature="e#4967#7559#0" expanded="false" />
+            <element signature="e#7895#12122#0" expanded="false" />
+            <element signature="e#12150#13844#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -711,14 +739,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/snowboydecoder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="36" column="4" lean-forward="false" selection-start-line="36" selection-start-column="4" selection-end-line="36" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/help">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -747,17 +767,55 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ledEyes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="8" lean-forward="true" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Log.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="22" column="37" lean-forward="false" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
+          <folding>
+            <element signature="e#77#91#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/snowboydetect.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="34" lean-forward="false" selection-start-line="4" selection-start-column="34" selection-end-line="4" selection-end-column="34" />
+        <state relative-caret-position="153">
+          <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" column="11" lean-forward="true" selection-start-line="29" selection-start-column="11" selection-end-line="29" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/motorFunctions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1700">
+          <caret line="32" column="0" lean-forward="true" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+          <folding>
+            <element signature="e#109#120#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/speechrecognition.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6239">
+        <state relative-caret-position="384">
           <caret line="1067" column="64" lean-forward="false" selection-start-line="1067" selection-start-column="59" selection-end-line="1067" selection-end-column="64" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
@@ -781,51 +839,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Log.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="28" lean-forward="false" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
-          <folding>
-            <element signature="e#77#91#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/motorFunctions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" column="77" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding>
-            <element signature="e#109#120#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ledEyes.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="8" lean-forward="true" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/demo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="422">
-          <caret line="29" column="11" lean-forward="true" selection-start-line="29" selection-start-column="11" selection-end-line="29" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/__main__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="230" column="28" lean-forward="true" selection-start-line="230" selection-start-column="28" selection-end-line="230" selection-end-column="28" />
+        <state relative-caret-position="-665">
+          <caret line="216" column="30" lean-forward="true" selection-start-line="216" selection-start-column="30" selection-end-line="216" selection-end-column="30" />
           <folding>
             <element signature="e#0#27#0" expanded="true" />
-            <element signature="e#1145#1473#0" expanded="false" />
+            <element signature="e#1551#1879#0" expanded="false" />
+            <element signature="e#1911#2320#0" expanded="false" />
+            <element signature="e#2357#2973#1" expanded="false" />
+            <element signature="e#3127#4832#0" expanded="false" />
+            <element signature="e#3200#3327#0" expanded="false" />
+            <element signature="e#4967#7559#0" expanded="false" />
+            <element signature="e#7895#12122#0" expanded="false" />
+            <element signature="e#12150#13844#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/snowboydecoder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="24" lean-forward="false" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
+          <folding>
+            <element signature="e#23#41#0" expanded="true" />
           </folding>
         </state>
       </provider>

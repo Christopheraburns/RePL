@@ -11,14 +11,14 @@ LOGFILE='RePL.log'
 class rLog(object):
 
     def __init__(self, init):
-        if init:
+        if init: #create a new log file
             logging.getLogger("RePLLog")
             logging.basicConfig(filename=LOGFILE, level=logging.DEBUG)
             logging.info("")
             logging.info("*******************New RePL instance booting!***********************************")
             logging.info("********************************************************************************")
             logging.info("")
-        else:
+        else:   #write to an existing log file
             logging.getLogger("RePLLog")
             logging.basicConfig(filename=LOGFILE, level=logging.DEBUG)
 
