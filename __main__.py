@@ -6,11 +6,30 @@ from botocore.exceptions import BotoCoreError, ClientError
 from contextlib import closing
 import os.path
 import sys
-import subprocess
 import Log
-import time
 import pygame.mixer
 from pygame.mixer import Sound
+import atexit
+import signal
+import snowboydecoder
+
+interrupted = False
+model = None
+
+try: #Attempt to Load RPi module - will only work on Pi
+    import RPi.GPIO as GPIO
+except ImportError as e:
+        #logger.LogError(
+        print("__main__.py: Cannot import the RPi module, install it with pip or this may not be a Raspberry Pi")
+
+def signal_handler(signal, frame):
+    global interrupted
+    interrupted = True
+
+def interrupt_callback():
+    global interrupted
+    return interrupted
+
 
 
 #Create a logger object
@@ -23,6 +42,12 @@ polly = session.client("polly")
 r = sr.Recognizer()
 m = sr.Microphone()
 Robot = mf.Body()
+
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(40, GPIO.OUT)
+GPIO.output(40, GPIO.HIGH)
+
 
 #Does not get logged
 def showHelp():
@@ -153,7 +178,6 @@ def repeatCmd(value):
         logger.LogError("__main__.py: Error: {}".format(e))
 
 
-
 def listenVoiceCmd():
     strValue = None
     try:
@@ -189,25 +213,53 @@ def listenVoiceCmd():
                 pass
 
     except KeyboardInterrupt:
-        sys.exit(-1)
+        logger.LogThis("__main__.py: listenVoiceCmd(): Ctrl+C sig received. Exiting")
+        exit(-1)
 
-    main(False)
+    wakeOnKeyword()
+
+
+def wakeOnKeyword():
+    try:
+        signal.signal(signal.SIGINT, signal_handler)
+        detector = snowboydecoder.HotwordDetector(model, sensitivity=0.5)
+
+        detector.start(detected_callback=wakeOnKeyword,
+                       interrupt_check=interrupt_callback,
+                       sleep_time=0.03)
+
+        detector.terminate()
+
+    except Exception as e:
+        limit.play()
+        logger.LogError("__main__.py: wakeOnKeyword(): Error: {}".format(e))
+
 
 
 def main(init):
-
     if len(sys.argv) == 1:
         if init:
-            logger.LogThis("__main__.py: No parameters found, defaulting to manual mode.  Try -h for help")
-    if "voice" in sys.argv:
-        listenVoiceCmd()
-    elif "help" in sys.argv:
-        showHelp()
-    else:
+            logger.LogThis("__main__.py: No parameters or model file specified, defaulting to manual mode.  Try -h for help")
         command = raw_input("Enter a command:")
         command = command.lower()
         processCmd(command, False)
+    elif "help" in sys.argv:
+        showHelp()
+    else:
+        global model
+        model = sys.argv[1]
+        wakeOnKeyword()
 
+
+        #listenVoiceCmd()
+
+
+
+def turnLEDoff():
+    GPIO.output(40, GPIO.LOW)
+
+
+atexit.register(turnLEDoff)
 #Main
 if __name__ == "__main__":
     main(True)

@@ -6,11 +6,11 @@ import snowboydetect
 import time
 import wave
 import os
-import Log
+import logging
 
-Log.basicConfig()
-logger = Log.getLogger("snowboy")
-logger.setLevel(Log.INFO)
+logging.basicConfig()
+logger = logging.getLogger("snowboy")
+logger.setLevel(logging.INFO)
 TOP_DIR = os.path.dirname(os.path.abspath(__file__))
 
 RESOURCE_FILE = os.path.join(TOP_DIR, "resources/common.res")
