@@ -1,0 +1,20 @@
+{'Labels': [
+  {'Confidence': 99.29132843017578, 'Name': 'Human'},
+  {'Confidence': 99.29470825195312, 'Name': 'People'},
+  {'Confidence': 99.29470825195312, 'Name': 'Person'},
+  {'Confidence': 98.16999053955078, 'Name': 'Arm'},
+  {'Confidence': 51.457489013671875, 'Name': 'Face'},
+  {'Confidence': 51.457489013671875, 'Name': 'Selfie'}
+],
+  'ResponseMetadata': {
+    'RetryAttempts': 0,
+    'HTTPStatusCode': 200,
+    'RequestId': '39737a42-e9cf-11e6-b837-ef727c7b4c2e',
+    'HTTPHeaders': {
+      'date': 'Fri, 03 Feb 2017 05:11:32 GMT',
+      'x-amzn-requestid': '39737a42-e9cf-11e6-b837-ef727c7b4c2e',
+      'content-length': '302',
+      'content-type': 'application/x-amz-json-1.1',
+      'connection': 'keep-alive'}
+  }
+}

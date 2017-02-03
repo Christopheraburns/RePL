@@ -58,8 +58,7 @@ class Body(object):
                 pwm = GPIO.PWM(13, frequencyHertz)
                 dutyCycle = rightPosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
-                ack.play()
-                time.sleep(2)
+                time.sleep(1.5)
             except Exception as e:
                 limit.play()
                 logger.LogError("motorFunctions.py: An error has occured {}".format(e.message))
@@ -73,8 +72,7 @@ class Body(object):
                 pwm = GPIO.PWM(13, frequencyHertz)
                 dutyCycle = middlePosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
-                ack.play()
-                time.sleep(2)
+                time.sleep(1.5)
             except Exception as e:
                 limit.play()
                 logger.LogError("motorFunctions.py: An error has occured {}".format(e.message))
@@ -88,8 +86,7 @@ class Body(object):
                 pwm = GPIO.PWM(13, frequencyHertz)
                 dutyCycle = leftPosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
-                ack.play()
-                time.sleep(2)
+                time.sleep(1.5)
             except Exception as e:
                 limit.play()
                 logger.LogError("motorFunctions.py: An error has occured: {}".format(e.message))
@@ -103,8 +100,7 @@ class Body(object):
                 pwm = GPIO.PWM(15, frequencyHertz)
                 dutyCycle = leftPosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
-                ack.play()
-                time.sleep(2)
+                time.sleep(1.5)
             except Exception as e:
                 limit.play()
                 logger.LogError("motorFunctions.py: An error has occured: {}".format(e.message))
@@ -118,8 +114,7 @@ class Body(object):
                 pwm = GPIO.PWM(15, frequencyHertz)
                 dutyCycle = middlePosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
-                ack.play()
-                time.sleep(2)
+                time.sleep(1.5)
             except Exception as e:
                 limit.play()
                 logger.LogError("motorFunctions.py: An error has occured {}".format(e.message))
@@ -139,8 +134,7 @@ class Body(object):
                 pwm = GPIO.PWM(12, frequencyHertz)
                 dutyCycle = leftPosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
-                ack.play()
-                time.sleep(2)
+                time.sleep(1.5)
             except Exception as e:
                 limit.play()
                 logger.LogError("motorFunctions.py: An error has occured {}".format(e))
@@ -154,8 +148,7 @@ class Body(object):
                 pwm = GPIO.PWM(12, frequencyHertz)
                 dutyCycle = middlePosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
-                ack.play()
-                time.sleep(2)
+                time.sleep(1.5)
             except Exception as e:
                 limit.play()
                 logger.LogError("motorFunctions.py: An error has occured {}".format(e))
@@ -170,8 +163,7 @@ class Body(object):
                 pwm = GPIO.PWM(12, frequencyHertz)
                 dutyCycle = rightPosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
-                ack.play()
-                time.sleep(2)
+                time.sleep(1.5)
             except Exception as e:
                 limit.play()
                 logger.LogError("motorFunctions.py: An error has occured {}".format(e))
@@ -185,8 +177,7 @@ class Body(object):
                 pwm = GPIO.PWM(11, frequencyHertz)
                 dutyCycle = rightPosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
-                ack.play()
-                time.sleep(2)
+                time.sleep(1.5)
             except Exception as e:
                 limit.play()
                 logger.LogError("motorFunctions.py: An error has occured {}".format(e))
@@ -200,11 +191,14 @@ class Body(object):
                 pwm = GPIO.PWM(11, frequencyHertz)
                 dutyCycle = middlePosition_RS * 100 / msPerCycle
                 pwm.start(dutyCycle)
-                ack.play()
-                time.sleep(2)
+                time.sleep(1.5)
             except Exception as e:
                 limit.play()
                 logger.LogError("motorFunctions.py: An error has occured {}".format(e))
+
+        @staticmethod
+        def wave():
+            logger.LogThis("motorFunctions.py: STRAIGHTening RIGHT arm (GPIO 11)")
 
 
 
