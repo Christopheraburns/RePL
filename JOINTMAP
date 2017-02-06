@@ -1,6 +1,16 @@
-RIGHT SHOULDER      12
-RIGHT ELBOW         11
-LEFT SHOULDER       13
-LEFT ELBOW          15
-RIGHT WHEEL         00
-LEFT WHEEL          00
+JOINT                       GPIO        MIN_POS     MAX_POS     START_POS   LIMITATIONS
+
+RIGHT_SHOULDER_ROTATION     01          0           180         00          N/A
+RIGHT_SHOULDER_EXTENSION    02          0           180         00          N/A
+RIGHT_ELBOW_EXTENSION       03          0           090         00          N/A
+RIGHT_WRIST_ROTATION        04          0           180         00          N/A
+LEFT_SHOULDER_ROTATION      05          0           180         00          N/A
+LEFT_SHOULDER_EXTENSION     06          0           180         00          N/A
+LEFT_ELBOW_EXTENSION        07          0           090         00          N/A
+LEFT_WRIST_ROTATION         08          0           180         90          N/A
+NECK_ROTATION               09          0           180         90          if NECK_ELEVATION > 115: NECK_ROTATION.MAX = 150 and NECK_ROTATION.MIN  = 10
+NECK_ELEVATION              10          50          165         90          if NECK_ROTATION > 125 or NECK_ROTATION < 45: NECK_ELEVATION.MAX = 115 AND NECK_ELEVATION.MIN = 60
+RIGHT_FRONT_WHEEL           11          N/A         N/A         N/A         N/A
+RIGHT_REAR_TREAD            12          N/A         N/A         N/A         N/A
+LEFT_FRONT_WHEEL            13          N/A         N/A         N/A         N/A
+LEFT_REAR_TREAD             14          N/A         N/A         N/A         N/A

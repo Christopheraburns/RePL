@@ -1,9 +1,10 @@
 # 2/3/17
 # Chris Burns @Forecast_Cloudy
 """
-    This file holds logic for processing a command
+    This file holds logic for processing a command, including alll possible commands to date as well as the function call
+    to the appropriate module.
 """
-import Log
+import log
 import motorFunctions as mf
 import os
 import computerVision as cv
@@ -12,7 +13,7 @@ import sys
 
 
 #Create a logger object
-logger = Log.rLog(False)
+logger = log.rLog(False)
 
 #Create motorfunction instance
 Robot = mf.Body()

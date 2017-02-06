@@ -12,7 +12,7 @@ import math
 import collections
 import stat
 import json
-import Log
+import log
 
 try: #Attempt to use Python 2 modules
     from urllib import urlencode
@@ -22,7 +22,7 @@ except ImportError: #Use Python 3
     from urllib.request import Request, urlopen
     from urllib.error import URLError, HTTPError
 
-logger = Log.rLog(False)
+logger = log.rLog(False)
 
 logger.LogThis("speechrecognition class instantiated")
 

@@ -5,14 +5,16 @@
 
 import time
 import pygame.mixer
-import Log
-import os
+import log
 from pygame.mixer import Sound
 
 #Create a logger object
-logger = Log.rLog(False)
+logger = log.rLog(False)
 
-try: #Attempt to Load RPi module - will only work on Pi
+#Attempt to Load RPi module - this code will only execute on Pi
+#TODO - Create a virtual bot to test code up to the point of axis manipulation
+#TODO - even better if the virual bot can be a visualization
+try:
     import RPi.GPIO as GPIO
 except ImportError as e:
     logger.LogError("motorFunctions.py: Cannot import the RPi module, install it with pip or this may not be a Raspberry Pi")
@@ -45,6 +47,12 @@ class Body(object):
         if debug:
             GPIO.setwarnings(True)
         DEBUG = debug
+
+    @staticmethod
+    def execMove(pin, pos):
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setup(pin, GPIO.OUT)
+        pwm = GPIO.PWM(pin, frequencyHertz)
 
 
     class LeftArm():

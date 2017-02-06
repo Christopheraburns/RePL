@@ -1,9 +1,8 @@
-import motorFunctions as mf
 import speechrecognition as sr
 import cortex
 import os.path
 import sys
-import Log
+import log
 import pygame.mixer
 from pygame.mixer import Sound
 import atexit
@@ -22,10 +21,9 @@ except ImportError as e:
 
 TOP_DIR = os.path.dirname(os.path.abspath(__file__))
 RESOURCE_FILE = os.path.join(TOP_DIR, "resources/common.res")
-DETECT_DING = os.path.join(TOP_DIR, "resources/ding.wav")
-DETECT_DONG = os.path.join(TOP_DIR, "resources/dong.wav")
 
 interrupted = False
+#TODO don't hardcode the model file - pull this from sys.args
 model = "REPL.pmdl"
 
 def turnLEDoff():
@@ -41,19 +39,19 @@ def interrupt_callback():
 
 
 #Create a logger object
-logger = Log.rLog(True)
+logger = log.rLog(True)
 
 #intialize the Speech Recognition engine
 r = sr.Recognizer()
 m = sr.Microphone()
 
 #initialize the Robot Library
-Robot = mf.Body()
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(40, GPIO.OUT)
-GPIO.output(40, GPIO.HIGH)
+#Robot = mf.Body()
+#GPIO.setmode(GPIO.BOARD)
+#GPIO.setup(40, GPIO.OUT)
+#GPIO.output(40, GPIO.HIGH)
 
-
+#Class used by SnowBoy for signal detection
 class RingBuffer(object):
     """Ring buffer to hold audio from PortAudio"""
     def __init__(self, size = 4096):
@@ -69,6 +67,7 @@ class RingBuffer(object):
         self._buf.clear()
         return tmp
 
+#Class used by Snowboy for signal detection
 class HotwordDetector(object):
     """
     Snowboy decoder to detect whether a keyword specified by `decoder_model`
@@ -202,149 +201,7 @@ class HotwordDetector(object):
 
 detector = HotwordDetector(model, sensitivity=0.5)
 
-"""
-def processCmd(command, voice):
-    try:
-        cmdRecognized = True
-        if command:
-            logger.LogThis("__main__.py: recieved command: {}".format(command))
-            command = command.lower()
-            if "right" in command or "write" in command:
-                logger.LogThis("__main__.py: Keyword RIGHT (or WRITE) detected, creating rightArm object")
-                rightArm = Robot.RightArm()
-                if "up" in command or "raise" in command:
-                    logger.LogThis("__main__.py: OPTION 1: Keyword UP (or RAISE) detected, calling rightArm.moveUp()")
-                    rightArm.moveUp()
-                elif "down" in command or "lower" in command:
-                    logger.LogThis("__main__.py: OPTION 2: Keyword DOWN (or Lower) detected, calling rightArm.moveDown()")
-                    rightArm.moveDown()
-                elif "out" in command:
-                    logger.LogThis("__main__.py: OPTION 3: Keyword OUT detected, calling rightArm.moveParallel()")
-                    rightArm.moveParallel()
-                elif "bend" in command:
-                    logger.LogThis("__main__.py: OPTION 4: Keyword BEND detected, calling rightArm.bend()")
-                    rightArm.bend()
-                elif "straight" in command:
-                    logger.LogThis("__main__.py: OPTION 5: Keyword STRAIGHT detected, calling rightArm.straighten()")
-                    rightArm.straighten()
-                else:
-                    cmdRecognized = False
-            elif "left" in command:
-                logger.LogThis("__main__.py: Keyword LEFT detected, creating leftArm object")
-                leftArm = Robot.LeftArm()
-                if "up" in command or "raise" in command:
-                    logger.LogThis("__main__.py: OPTION 6 :Keyword UP detected, calling leftArm.moveUp()")
-                    leftArm.moveUp()
-                elif "down" in command or "lower" in command:
-                    logger.LogThis("__main__.py: OPTION 7: Keyword DOWN (or lower) detected, calling leftArm.moveDown()")
-                    leftArm.moveDown()
-                elif "out"in command:
-                    logger.LogThis("__main__.py: OPTION 8: Keyword OUT detected, calling leftArm.moveParallel()")
-                    leftArm.moveParallel()
-                elif "bend" in command:
-                    logger.LogThis("__main__.py: OPTION 9: Keyword BEND detected, calling leftArm.bend()")
-                    leftArm.bend()
-                elif "straight" in command:
-                    logger.LogThis("__main__.py: OPTION 10: Keyword STRAIGHT detected, calling leftArm.straighten()")
-                    leftArm.straighten()
-                else:
-                    cmdRecognized = False
-            elif "both" in command or "arms" in command:
-                logger.LogThis("__main__.py: Keyword BOTH or ARMS detected, creating leftArm & rightArm objects")
-                rightArm = Robot.RightArm()
-                leftArm = Robot.LeftArm()
-                if "up" in command or "raise" in command:
-                    logger.LogThis("__main__.py: OPTION 11: Keyword UP or RAISE detected, calling leftArm.moveUp() & rightArm.moveUp()")
-                    leftArm.moveUp()
-                    rightArm.moveUp()
-                elif "down" in command or "lower" in command:
-                    logger.LogThis("__main__.py: OPTION 12: Keyword DOWN (or lower) detected, calling leftArm.moveDown() & rightArm.moveDown()")
-                    leftArm.moveDown()
-                    rightArm.moveDown()
-                elif "out" in command:
-                    logger.LogThis("__main__.py: OPTION 13: Keyword OUT detected, calling leftArm.moveParallel() & rightArm.moveParallel()")
-                    leftArm.moveParallel()
-                    rightArm.moveParallel()
-                elif "bend" in command:
-                    logger.LogThis("__main__.py: OPTION 14: Keyword BEND detected, calling leftArm.bend() & rightArm.bend()")
-                    leftArm.bend()
-                    rightArm.bend()
-                elif "straight" in command:
-                    logger.LogThis("__main__.py: OPTION 15: Keyword STRAIGHT detected, calling leftArm.straighten() & rightArm.straighten()")
-                    leftArm.straighten()
-                    rightArm.straighten()
-                else:
-                    cmdRecognized = False
-            elif 'help' in command:
-                showHelp()
-            elif 'exit' in command:
-                exit()
-            elif "identify" in command:
-                cv.Vision.takeSinglePicture()
-                response = cv.Vision.callRekognition()
-                pollySays(response)
-            elif "what" in command and "is" in command and "this" in command: #call detect labels
-                cv.Vision.takeSinglePicture()
-                response = cv.Vision.callRekognition()
-                pollySays(response)
-
-            else:
-                cmdRecognized = False
-
-            if not cmdRecognized:
-                if voice:
-                    pollySays("I don't understand " + command)
-        else:
-            logger.LogError("__main__.py: processCmd(): Nothing returned from Voice to Text service!")
-
-        if not voice:
-            main(False)
-    except KeyboardInterrupt:
-        logger.LogThis("__main__.py:  processCmd() CTRL+C pressed.")
-        sys.exit()
-"""
-
-"""
-def pollySays(value):
-    try:
-        logger.LogThis("__main__.py: Contacting polly to convert command to voice")
-        response = polly.synthesize_speech(Text=value, OutputFormat="ogg_vorbis", VoiceId="Emma")
-        if "AudioStream" in response:
-            with closing(response["AudioStream"]) as stream:
-                output = os.path.join("speech.ogg")
-                try:
-                    # Open a file for writing the output as a binary stream
-                    logger.LogThis("__main__.py: writing the response to speech.ogg.")
-                    with open(output, "wb") as file:
-                        file.write(stream.read())
-
-                        ## play the audio using the platform's default player
-                        #if sys.platform == "win32":
-                         #   os.startfile(output)
-                       # else:
-                            ## The following works on mac and linux. (Darwin = mac, xdg-open = linux).
-                            #opener = "open" if sys.platform == "darwin" else "xdg-open"
-                            #subprocess.call([opener, output])
-
-                    pygame.mixer.init()
-                    cmd = Sound("speech.ogg")
-                    cmd.play()
-                except IOError as e:
-                    # Could not write to file
-                    limit.play()
-                    logger.LogError("__main__.py: IOError: {}".format(e.message))
-        else:
-            # The response didn't contain audio data, exit gracefully
-            logger.LogThis("__main__.py: Response did not contain audio!")
-
-    except(BotoCoreError, ClientError) as e:
-        limit.play()
-        logger.LogError("__main__.py: Error: {}".format(e))
-    except KeyboardInterrupt:
-        logger.LogThis("__main__.py: PollySays(): Ctrl-C interrupt")
-        sys.exit()
-"""
-
+#function executed AFTER keyword detected - switched from SnowBoy keyword detector to send speech to NLP service
 def listenVoiceCmd():
     strValue = None
     try:
@@ -360,14 +217,11 @@ def listenVoiceCmd():
 
                 logger.LogThis ("__main__.py: Received audio data. Attempting to translate Voice to Text now...")
                 try:
-                    #value = r.recognize_sphinx(audio)
                     value = r.recognize_google(audio)
 
                     if str is bytes:  # this version of Python uses bytes for strings (Python 2)
-                        #print(u"You said {}".format(value).encode("utf-8"))
                         strValue = value.encode("utf-8")
                     else:  # this version of Python uses unicode for strings (Python 3+)
-                        #print("You said {}".format(value))
                         strValue = value
 
                     logger.LogThis("__main__.py: Vocie-to-Text translation Service returned: {}".format(strValue))
@@ -375,7 +229,7 @@ def listenVoiceCmd():
                     logger.LogThis("Re-enabling SnowBoy")
                     break
                 except sr.UnknownValueError as e:
-                    cortex.processCmd("I didn't understand that", True)
+                    cortex.processCmd("I didn't understand that command", True)
                     logger.LogError("__main__.py: TranslateServiceError: Unable to translate audio: {}".format(e.message))
                 except sr.RequestError as e:
                     cortex.callAudible("limit")
@@ -390,9 +244,10 @@ def listenVoiceCmd():
         logger.LogThis("__main__.py: listenVoiceCmd(): Ctrl+C sig received. Exiting")
         sys.exit()
 
+#function to detect keyword and make callback to NLP function
+#TODO - Add code here for LED to recognize the keyword and give visual feedback that it is okay to being speaking.
 def wakeOnKeyword():
     try:
-        logger.LogDebug("Activating SnowBoy")
         signal.signal(signal.SIGINT, signal_handler)
         global detector
         detector.start(detected_callback=listenVoiceCmd,

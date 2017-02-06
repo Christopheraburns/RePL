@@ -3,7 +3,12 @@
 """
     The Computerspeech module will coordinate all activites that require speech from AWS Polly service
 """
-import Log
+#TODO: Incorporate a grammar library for proper grammar when speaking results of commands
+#TODO: Take a look at this one:
+#TODO: pip install --user --upgrade grammar-check
+#TODO: https://pypi.python.org/pypi/grammar-check
+
+import log
 from boto3 import Session
 from botocore.exceptions import BotoCoreError, ClientError
 import os
@@ -16,7 +21,7 @@ session = Session(profile_name="default")
 polly = session.client("polly")
 
 #Create a logger object
-logger = Log.rLog(False)
+logger = log.rLog(False)
 
 def callAudible(wav):
     pygame.mixer.init()

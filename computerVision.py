@@ -6,10 +6,10 @@ import pygame
 import pygame.camera
 from boto3 import Session
 from botocore.exceptions import BotoCoreError, ClientError
-import Log
+import log
 import os
 #Create a logger object
-logger = Log.rLog(False)
+logger = log.rLog(False)
 
 #Create an AWS Client obj
 session = Session(profile_name="default")

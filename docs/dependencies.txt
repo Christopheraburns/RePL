@@ -1,0 +1,10 @@
+DEPENDENCY                          URL/INSTALL instructions
+
+AWS Boto3 Python SDK
+PortAudio
+PyAudio                             pip install pyaudio
+Snowboy                             https://snowboy.kitt.ai/
+RPi
+pygame                              pip install pygame
+Python Speech Recognition           https://pypi.python.org/pypi/SpeechRecognition/
+
