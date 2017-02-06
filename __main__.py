@@ -1,9 +1,6 @@
 import motorFunctions as mf
-import computerVision as cv
 import speechrecognition as sr
-from boto3 import Session
-from botocore.exceptions import BotoCoreError, ClientError
-from contextlib import closing
+import cortex
 import os.path
 import sys
 import Log
@@ -15,6 +12,7 @@ import collections
 import pyaudio
 import snowboydetect
 import time
+
 try: #Attempt to Load RPi module - will only work on Pi
     import RPi.GPIO as GPIO
 except ImportError as e:
@@ -26,16 +24,12 @@ TOP_DIR = os.path.dirname(os.path.abspath(__file__))
 RESOURCE_FILE = os.path.join(TOP_DIR, "resources/common.res")
 DETECT_DING = os.path.join(TOP_DIR, "resources/ding.wav")
 DETECT_DONG = os.path.join(TOP_DIR, "resources/dong.wav")
+
 interrupted = False
 model = "REPL.pmdl"
-pygame.mixer.init()
-ack = Sound("audio/ack.wav")
-limit = Sound("audio/limit.wav")
-
 
 def turnLEDoff():
     GPIO.output(40, GPIO.LOW)
-    Sound.stop()
 
 def signal_handler(signal, frame):
     global interrupted
@@ -49,11 +43,6 @@ def interrupt_callback():
 #Create a logger object
 logger = Log.rLog(True)
 
-
-#Create an AWS Client obj
-session = Session(profile_name="default")
-polly = session.client("polly")
-
 #intialize the Speech Recognition engine
 r = sr.Recognizer()
 m = sr.Microphone()
@@ -64,16 +53,6 @@ GPIO.setmode(GPIO.BOARD)
 GPIO.setup(40, GPIO.OUT)
 GPIO.output(40, GPIO.HIGH)
 
-def showHelp():
-    if os.path.exists("help"):
-        with open("help") as f:
-            hcontent = f.readlines()
-            hcontent = [x.strip() for x in hcontent]
-            for line in hcontent:
-                print(line)
-    else:
-        limit.play()
-        logger.LogError("__main__.py: Help file is missing - cannot display commands")
 
 class RingBuffer(object):
     """Ring buffer to hold audio from PortAudio"""
@@ -132,7 +111,7 @@ class HotwordDetector(object):
             self.detector.SetSensitivity(sensitivity_str)
 
 
-    def start(self, detected_callback=ack.play,
+    def start(self, detected_callback=cortex.callAudible("ack"),
               interrupt_check=lambda: False,
               sleep_time=0.03):
         """
@@ -223,6 +202,7 @@ class HotwordDetector(object):
 
 detector = HotwordDetector(model, sensitivity=0.5)
 
+"""
 def processCmd(command, voice):
     try:
         cmdRecognized = True
@@ -321,8 +301,10 @@ def processCmd(command, voice):
             main(False)
     except KeyboardInterrupt:
         logger.LogThis("__main__.py:  processCmd() CTRL+C pressed.")
-        exit()
+        sys.exit()
+"""
 
+"""
 def pollySays(value):
     try:
         logger.LogThis("__main__.py: Contacting polly to convert command to voice")
@@ -336,13 +318,13 @@ def pollySays(value):
                     with open(output, "wb") as file:
                         file.write(stream.read())
 
-                        """"# play the audio using the platform's default player
-                        if sys.platform == "win32":
-                            os.startfile(output)
-                        else:
-                            # The following works on mac and linux. (Darwin = mac, xdg-open = linux).
-                            opener = "open" if sys.platform == "darwin" else "xdg-open"
-                            subprocess.call([opener, output])"""
+                        ## play the audio using the platform's default player
+                        #if sys.platform == "win32":
+                         #   os.startfile(output)
+                       # else:
+                            ## The following works on mac and linux. (Darwin = mac, xdg-open = linux).
+                            #opener = "open" if sys.platform == "darwin" else "xdg-open"
+                            #subprocess.call([opener, output])
 
                     pygame.mixer.init()
                     cmd = Sound("speech.ogg")
@@ -360,7 +342,8 @@ def pollySays(value):
         logger.LogError("__main__.py: Error: {}".format(e))
     except KeyboardInterrupt:
         logger.LogThis("__main__.py: PollySays(): Ctrl-C interrupt")
-        exit()
+        sys.exit()
+"""
 
 def listenVoiceCmd():
     strValue = None
@@ -388,15 +371,14 @@ def listenVoiceCmd():
                         strValue = value
 
                     logger.LogThis("__main__.py: Vocie-to-Text translation Service returned: {}".format(strValue))
-                    processCmd(strValue, True)
+                    cortex.processCmd(strValue, True)
                     logger.LogThis("Re-enabling SnowBoy")
                     break
                 except sr.UnknownValueError as e:
-                    processCmd("I didn't understand that", True)
-                    limit.play()
+                    cortex.processCmd("I didn't understand that", True)
                     logger.LogError("__main__.py: TranslateServiceError: Unable to translate audio: {}".format(e.message))
                 except sr.RequestError as e:
-                    limit.play()
+                    cortex.callAudible("limit")
                     logger.LogError("__main__.py: TranslateServiceError: Unable to access NLP service {}".format(e.message))
                 break
             wakeOnKeyword()# turn snowboy back on
@@ -404,11 +386,9 @@ def listenVoiceCmd():
             timer = timer + 1
 
         wakeOnKeyword()  # turn snowboy back on
-
     except KeyboardInterrupt:
         logger.LogThis("__main__.py: listenVoiceCmd(): Ctrl+C sig received. Exiting")
-        exit()
-
+        sys.exit()
 
 def wakeOnKeyword():
     try:
@@ -418,13 +398,12 @@ def wakeOnKeyword():
         detector.start(detected_callback=listenVoiceCmd,
                        interrupt_check=interrupt_callback,
                        sleep_time=0.03)
-
     except Exception as e:
-        limit.play()
+        cortex.callAudible("limit")
         logger.LogError("__main__.py: wakeOnKeyword(): Error: {}".format(e))
     except KeyboardInterrupt:
         logger.LogThis("__main__.py: wakeOnKeyword(): Ctrl-C interrupt")
-        exit()
+        sys.exit()
 
 #Main - look for the voice argument, as well as the model file to use with Snowboy.
 def main(init):
@@ -434,17 +413,16 @@ def main(init):
                 logger.LogThis("__main__.py: No parameters or model file specified, defaulting to manual mode.  Try -h for help")
             command = raw_input("Enter a command:")
             command = command.lower()
-            processCmd(command, False)
+            cortex.processCmd(command, False)
         elif "help" in sys.argv:
-            showHelp()
+            cortex.showHelp()
         else:
             global model
             model = sys.argv[1]
             wakeOnKeyword()
     except KeyboardInterrupt:
         logger.LogThis("__main__.py: main(): Ctrl-C interrupt")
-        exit()
-
+        sys.exit()
 
 atexit.register(turnLEDoff)
 

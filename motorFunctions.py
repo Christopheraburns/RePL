@@ -198,10 +198,75 @@ class Body(object):
 
         @staticmethod
         def wave():
+            #TODO - Add code to wave the right arm.  Wave as in "Hello or Goodbye"
             logger.LogThis("motorFunctions.py: STRAIGHTening RIGHT arm (GPIO 11)")
 
 
+    class Neck():
 
+        def __init__(self):
+            pass
+
+
+        @staticmethod
+        def lookForward(): #At rest position - not left or right
+            logger.LogThis("motorFunctions.py: moving neck to LOOK FORWARD position(GPIO 40)")
+            GPIO.setmode(GPIO.BOARD)
+            GPIO.setup(40, GPIO.OUT)
+            pwm = GPIO.PWM(40, frequencyHertz)
+            dutyCycle = middlePosition_RS * 100 / msPerCycle
+            pwm.start(dutyCycle)
+            time.sleep(1.5)
+
+        @staticmethod
+        def lookLeft():
+            logger.LogThis("motorFunctions.py: moving neck to LOOK LEFT position (GPIO 40)")
+            GPIO.setmode(GPIO.BOARD)
+            GPIO.setup(40, GPIO.OUT)
+            pwm = GPIO.PWM(40, frequencyHertz)
+            dutyCycle = leftPosition_RS * 100 / msPerCycle
+            pwm.start(dutyCycle)
+            time.sleep(1.5)
+
+        @staticmethod
+        def lookRight():
+            logger.LogThis("motorFunctions.py: moving neck to LOOK RIGHT position (GPIO 40)")
+            GPIO.setmode(GPIO.BOARD)
+            GPIO.setup(40, GPIO.OUT)
+            pwm = GPIO.PWM(40, frequencyHertz)
+            dutyCycle = rightPosition_RS * 100 / msPerCycle
+            pwm.start(dutyCycle)
+            time.sleep(1.5)
+
+        @staticmethod
+        def lookStraight(): #At rest position not looking up or down
+            logger.LogThis("motorFunctions.py: moving neck to LOOK STRAIGHT ahead (GPIO 38)")
+            GPIO.setmode(GPIO.BOARD)
+            GPIO.setup(38, GPIO.OUT)
+            pwm = GPIO.PWM(38, frequencyHertz)
+            dutyCycle = middlePosition_RS * 100 / msPerCycle
+            pwm.start(dutyCycle)
+            time.sleep(1.5)
+
+        @staticmethod
+        def lookUp():
+            logger.LogThis("motorFunctions.py: moving neck to LOOK UP (GPIO 38)")
+            GPIO.setmode(GPIO.BOARD)
+            GPIO.setup(38, GPIO.OUT)
+            pwm = GPIO.PWM(38, frequencyHertz)
+            dutyCycle = leftPosition_RS * 100 / msPerCycle
+            pwm.start(dutyCycle)
+            time.sleep(1.5)
+
+        @staticmethod
+        def lookDown():
+            logger.LogThis("motorFunctions.py: moving neck to LOOK DOWN(GPIO 38)")
+            GPIO.setmode(GPIO.BOARD)
+            GPIO.setup(38, GPIO.OUT)
+            pwm = GPIO.PWM(38, frequencyHertz)
+            dutyCycle = 0.45 * 100 / msPerCycle
+            pwm.start(dutyCycle)
+            time.sleep(1.5)
 
 
 

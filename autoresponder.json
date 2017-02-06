@@ -1,0 +1,6 @@
+{'autoresponder': [
+    {'input': 'hello', 'response':['hello', 'hey', 'hi', 'hey whats up', 'good morning', 'good evening', 'good afternoon']},
+    {'input': 'whats your name', 'response':['my name is REPL', 'i am REPL', 'you can call me REPL']},
+    {'input': 'what is your name', 'response':['my name is REPL', 'i am REPL', 'you can call me REPL']}
+  ]
+}
