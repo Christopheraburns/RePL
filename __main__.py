@@ -27,7 +27,7 @@ interrupted = False
 model = "REPL.pmdl"
 
 def turnLEDoff():
-    GPIO.output(40, GPIO.LOW)
+    print("__main__.py::turnLEDoff(): Shutting Down")
 
 def signal_handler(signal, frame):
     global interrupted
@@ -274,6 +274,7 @@ def main(init):
         else:
             global model
             model = sys.argv[1]
+            cortex.center()
             wakeOnKeyword()
     except KeyboardInterrupt:
         logger.LogThis("__main__.py: main(): Ctrl-C interrupt")

@@ -15,6 +15,7 @@ import os
 import pygame.mixer
 from pygame.mixer import Sound
 from contextlib import closing
+import time
 
 #Create an AWS Client obj
 session = Session(profile_name="default")
@@ -67,5 +68,6 @@ def playAudio(audioFile):
         path = "audio/" + audioFile + ".ogg"
         cmd = Sound(path)
         cmd.play()
+        time.sleep(1)
     except Exception as e:
         logger.LogError("computerspeech.py: playAudio(): Unable to play:".format(e))

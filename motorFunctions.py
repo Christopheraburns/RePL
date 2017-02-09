@@ -8,6 +8,7 @@ import pygame.mixer
 import log
 from pygame.mixer import Sound
 
+
 #Create a logger object
 logger = log.rLog(False)
 
@@ -33,6 +34,22 @@ ack = Sound("audio/ack.wav")
 limit = Sound("audio/limit.wav")
 
 
+def executeMovement(pin, pos):
+    try:
+        # CREATE and Clean up a GPIO object with each call - until further notice
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setup(pin, GPIO.OUT)
+        pwm = GPIO.PWM(pin, 50)
+        pwm.start(0)
+        pwm.ChangeDutyCycle(pos)
+        time.sleep(.85)
+        pwm.stop()
+        GPIO.cleanup()
+    except Exception as e:
+        logger.LogError("motorFunctions::executeMovement() Error: {}".format(e.message))
+
+
+
 
 class Body(object):
     """A Body class encapulates the movements of appendages """
@@ -48,15 +65,7 @@ class Body(object):
             GPIO.setwarnings(True)
         DEBUG = debug
 
-    @staticmethod
-    def execMove(pin, pos):
-        GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(pin, GPIO.OUT)
-        pwm = GPIO.PWM(pin, frequencyHertz)
-
-
     class LeftArm():
-
         @staticmethod
         def moveDown():
             logger.LogThis("motorFunctions.py: moving LEFT arm (GPIO 13) to DOWN position")

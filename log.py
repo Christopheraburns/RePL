@@ -24,25 +24,25 @@ class rLog(object):
 
     def LogThis(self, message):
         ts = time.time()
-        logging.info(str(ts) + ":: " + message)
+        logging.info(str(ts) + ":: " + message + ' \n')
         print(message)
 
     def LogDebug(self, message):
         ts = time.time()
-        logging.debug(str(ts) + ":: " + message)
+        logging.debug(str(ts) + ":: " + message + ' \n')
         print("DEBUG: {}".format(message))
 
     def LogWarning(self, message):
         ts = time.time()
-        logging.warning(str(ts) + ":: " + message)
+        logging.warning(str(ts) + ":: " + message + ' \n')
         print("WARNING: {}".format(message))
 
     def LogError(self, message):
         ts = time.time()
-        logging.error(str(ts) + ":: " + message)
+        logging.error(str(ts) + ":: " + message + ' \n')
         print("ERROR: {}".format(message))
 
     def LogCritical(self, message):
         ts = time.time()
-        logging.critical(str(ts) + ":: " + message)
+        logging.critical(str(ts) + ":: " + message + ' \n')
         print("CRITICAL: {}".format(message))
