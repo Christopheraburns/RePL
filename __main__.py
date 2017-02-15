@@ -83,7 +83,7 @@ class HotwordDetector(object):
     """
     def __init__(self, decoder_model,
                  resource=RESOURCE_FILE,
-                 sensitivity=[],
+                 sensitivity=[500],
                  audio_gain=1):
 
         tm = type(decoder_model)
@@ -110,7 +110,7 @@ class HotwordDetector(object):
             self.detector.SetSensitivity(sensitivity_str)
 
 
-    def start(self, detected_callback=cortex.callAudible("ack"),
+    def start(self, detected_callback=None,
               interrupt_check=lambda: False,
               sleep_time=0.03):
         """
@@ -274,7 +274,7 @@ def main(init):
         else:
             global model
             model = sys.argv[1]
-            cortex.center()
+            #cortex.center()
             wakeOnKeyword()
     except KeyboardInterrupt:
         logger.LogThis("__main__.py: main(): Ctrl-C interrupt")

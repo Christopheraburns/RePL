@@ -734,11 +734,11 @@ class Recognizer(AudioSource):
         """
         Creates a new ``Recognizer`` instance, which represents a collection of speech recognition functionality.
         """
-        self.energy_threshold = 300  # minimum audio energy to consider for recording
+        self.energy_threshold = 250  # minimum audio energy to consider for recording
         self.dynamic_energy_threshold = True
         self.dynamic_energy_adjustment_damping = 0.15
         self.dynamic_energy_ratio = 1.5
-        self.pause_threshold = 0.8  # seconds of non-speaking audio before a phrase is considered complete
+        self.pause_threshold = 0.7  # seconds of non-speaking audio before a phrase is considered complete
         self.operation_timeout = None  # seconds after an internal operation (e.g., an API request) starts before it times out, or ``None`` for no timeout
 
         self.phrase_threshold = 0.3  # minimum seconds of speaking audio before we consider the speaking audio a phrase - values below this are ignored (for filtering out clicks and pops)

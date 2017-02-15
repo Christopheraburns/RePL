@@ -15,10 +15,6 @@ import ast
 #Create a logger object
 logger = log.rLog(False)
 
-def callAudible(wav):
-    cs.callAudible(wav)
-
-
 def showHelp():
     if os.path.exists("help"):
         with open("help") as f:
@@ -43,6 +39,10 @@ def loadJointMap():
     else:
         print("cortex.py::loadJointMap(): Unable to find/or open the JOINTMAP")
 
+#Try loading this one time at module load. -
+#TODO add logic to reload JOINTMAP on command
+JOINTMAP = loadJointMap()
+
 
 #Run at Startup to "center" all servos.  Will also run whenever the command "center" is given
 def center():
@@ -59,7 +59,7 @@ def center():
 
 def processCmd(command, voice):
     try:
-        dJoints = loadJointMap()
+        #dJoints = loadJointMap()
         cmdRecognized = True
         if command:
             command = command.lower()
@@ -68,24 +68,30 @@ def processCmd(command, voice):
                 logger.LogThis("cortex.py::processCmd(): CENTER detected, calling center function")
                 center()
             elif "look" in command:
+                logger.LogThis("Level 1 Keyword 'LOOK' detected")
                 if "right" in command or "write" in command:                                #LOOK RIGHT
-                    for joint in dJoints["Joints"]:
+                    logger.LogThis("Level 2 Keyword 'RIGHT' detected")
+                    for joint in JOINTMAP["Joints"]:
                         if joint["Name"] == "NECK_ROTATION":
                             mf.executeMovement(joint["GPIO"], joint["LOW"])
                 elif "left" in command:                                                     #LOOK LEFT
-                    for joint in dJoints["Joints"]:
+                    logger.LogThis("Level 1 Keyword 'LEFT' detected")
+                    for joint in JOINTMAP["Joints"]:
                         if joint["Name"] == "NECK_ROTATION":
                             mf.executeMovement(joint["GPIO"], joint["HIGH"])
-                elif "straight" in command or "strait" in command:                          #LOOK Straight ahead
-                    for joint in dJoints["Joints"]:
+                elif "straight" in command or "strait" or "at me" in command:                          #LOOK Straight ahead
+                    for joint in JOINTMAP["Joints"]:
                         if joint["Name"] == "NECK_ROTATION":
                             mf.executeMovement(joint["GPIO"], joint["MIDDLE"])
+                    for joint in JOINTMAP["Joints"]:
+                        if joint["Name"] == "NECK_ELEVATION":
+                            mf.executeMovement(joint["GPIO"], joint["MIDDLE"])
                 elif "up" in command:                                                       #LOOK UP
-                    for joint in dJoints["Joints"]:
+                    for joint in JOINTMAP["Joints"]:
                         if joint["Name"] == "NECK_ELEVATION":
                             mf.executeMovement(joint["GPIO"], joint["LOW"])
-                elif "down" in command:                                                     #LOOK DOWN
-                    for joint in dJoints["Joints"]:
+                elif "down" in command:                                 #LOOK DOWN
+                    for joint in JOINTMAP["Joints"]:
                         if joint["Name"] == "NECK_ELEVATION":
                             mf.executeMovement(joint["GPIO"], joint["HIGH"])
                 else:
@@ -93,78 +99,78 @@ def processCmd(command, voice):
             elif "arm" in command:
                 if "right" in command or "write" in command:
                     if "up" in command or "raise" in command:                               #Raise RIGHT ARM
-                        for joint in dJoints["Joints"]:
+                        for joint in JOINTMAP["Joints"]:
                             if joint["Name"] == "RIGHT_SHOULDER_EXTENSION":
                                 mf.executeMovement(joint["GPIO"], joint["HIGH"])
                     elif "down" in command or "lower" in command:                           #Lower the RIGHT ARM
-                        for joint in dJoints["Joints"]:
+                        for joint in JOINTMAP["Joints"]:
                             if joint["Name"] == "RIGHT_SHOULDER_EXTENSION":
                                 mf.executeMovement(joint["GPIO"], joint["LOW"])
                     elif "out" in command:                                                  #Extend the RIGHT ARM
-                        for joint in dJoints["Joints"]:
+                        for joint in JOINTMAP["Joints"]:
                             if joint["Name"] == "RIGHT_SHOULDER_EXTENSION":
                                 mf.executeMovement(joint["GPIO"], joint["MIDDLE"])
                     elif "bend" in command:                                                 #Bend the RIGHT ARM
-                        for joint in dJoints["Joints"]:
+                        for joint in JOINTMAP["Joints"]:
                             if joint["Name"] == "RIGHT_ELBOW_EXTENSION":
                                 mf.executeMovement(joint["GPIO"], joint["HIGH"])
                     elif "straight" in command or "straighten":                             #Straighten the RIGHT ARM
-                        for joint in dJoints["Joints"]:
+                        for joint in JOINTMAP["Joints"]:
                             if joint["Name"] == "RIGHT_ELBOW_EXTENSION":
                                 mf.executeMovement(joint["GPIO"], joint["MIDDLE"])
                     else:
                         cmdRecognized = False
                 elif "left" in command:
                     if "up" in command or "raise" in command:                               #Raise RIGHT ARM
-                        for joint in dJoints["Joints"]:
-                            if joint["Name"] == "LEFT_SHOULDER_EXTENSION":
-                                mf.executeMovement(joint["GPIO"], joint["LOW"])
-                    elif "down" in command or "lower" in command:                           #Lower the RIGHT ARM
-                        for joint in dJoints["Joints"]:
+                        for joint in JOINTMAP["Joints"]:
                             if joint["Name"] == "LEFT_SHOULDER_EXTENSION":
                                 mf.executeMovement(joint["GPIO"], joint["HIGH"])
+                    elif "down" in command or "lower" in command:                           #Lower the RIGHT ARM
+                        for joint in JOINTMAP["Joints"]:
+                            if joint["Name"] == "LEFT_SHOULDER_EXTENSION":
+                                mf.executeMovement(joint["GPIO"], joint["LOW"])
                     elif "out" in command:                                                  #Extend the RIGHT ARM
-                        for joint in dJoints["Joints"]:
+                        for joint in JOINTMAP["Joints"]:
                             if joint["Name"] == "LEFT_SHOULDER_EXTENSION":
                                 mf.executeMovement(joint["GPIO"], joint["MIDDLE"])
                     elif "bend" in command:                                                 #Bend the RIGHT ARM
-                        for joint in dJoints["Joints"]:
+                        for joint in JOINTMAP["Joints"]:
                             if joint["Name"] == "LEFT_ELBOW_EXTENSION":
                                 mf.executeMovement(joint["GPIO"], joint["LOW"])
-                    elif "straight" in command or "straighten":                             #Straighten the RIGHT ARM
-                        for joint in dJoints["Joints"]:
+                    elif "straight" in command or "straighten" in command:                             #Straighten the RIGHT ARM
+                        for joint in JOINTMAP["Joints"]:
                             if joint["Name"] == "LEFT_ELBOW_EXTENSION":
                                 mf.executeMovement(joint["GPIO"], joint["MIDDLE"])
                     else:
                         cmdRecognized = False
             elif "both" in command or "arms" in command:
-                if "up" in command or "raise" in command:                               #Raise BOTH ARMS
+                if "up" in command or "raise" in command or "rays" in command:                               #Raise BOTH ARMS
                     #Raise both Arms
-                    for joint in dJoints["Joints"]:
+                    for joint in JOINTMAP["Joints"]:
                         if joint["Name"] == "LEFT_SHOULDER_EXTENSION":
                             mf.executeMovement(joint["GPIO"], joint["LOW"])
                         elif joint["Name"] == "RIGHT_SHOULDER_EXTENSION":
                             mf.executeMovement(joint["GPIO"], joint["HIGH"])
                 elif "down" in command or "lower" in command:                           #put BOTH ARMS down
-                    for joint in dJoints["Joints"]:
+                    for joint in JOINTMAP["Joints"]:
                         if joint["Name"] == "LEFT_SHOULDER_EXTENSION":
                             mf.executeMovement(joint["GPIO"], joint["HIGH"])
                         elif joint["Name"] == "RIGHT_SHOULDER_EXTENSION":
                             mf.executeMovement(joint["GPIO"], joint["LOW"])
-                elif "out" in command or "extend":                                      #Extend BOTH ARMS
-                    for joint in dJoints["Joints"]:
+                elif "out" in command or "extend" in command:                                      #Extend BOTH ARMS
+                    for joint in JOINTMAP["Joints"]:
                         if joint["Name"] == "LEFT_SHOULDER_EXTENSION":
                             mf.executeMovement(joint["GPIO"], joint["MIDDLE"])
                         elif joint["Name"] == "RIGHT_SHOULDER_EXTENSION":
                             mf.executeMovement(joint["GPIO"], joint["MIDDLE"])
                 elif "bend" in command:                                                 #Bend BOTH ARMS
-                    for joint in dJoints["Joints"]:
+                    for joint in JOINTMAP["Joints"]:
                         if joint["Name"] == "LEFT_ELBOW_EXTENSION":
                             mf.executeMovement(joint["GPIO"], joint["LOW"])
                         elif joint["Name"] == "RIGHT_ELBOW_EXTENSION":
                             mf.executeMovement(joint["GPIO"], joint["HIGH"])
-                elif "straight" in command or "straighten" in command or "straighter":  #Straighten BOTH ARMS
-                    for joint in dJoints["Joints"]:
+                elif "straight" in command or "straighten" in command or "straighter" in command:  #Straighten BOTH ARMS
+                    for joint in JOINTMAP["Joints"]:
                         if joint["Name"] == "LEFT_ELBOW_EXTENSION":
                             mf.executeMovement(joint["GPIO"], joint["MIDDLE"])
                         elif joint["Name"] == "RIGHT_ELBOW_EXTENSION":
@@ -177,12 +183,24 @@ def processCmd(command, voice):
                     or "shot down" in command:
                 cs.playAudio("shuttingdown")
                 #Lower her head to indicate shutdown mode
-                for joint in dJoints["Joints"]:
+                for joint in JOINTMAP["Joints"]:
                     if joint["Name"] == "NECK_ELEVATION":
                         mf.executeMovement(joint["GPIO"], joint["HIGH"])
                 sys.exit()
             elif 'help' in command:
                 showHelp()
+            elif "identify" in command:
+                cv.Vision.takeSinglePicture()
+                response = cv.Vision.callRekognition()
+                cs.pollySays(response)
+            elif "what is this" in command or "what do you see" in command:  # call detect labels
+                cv.Vision.takeSinglePicture()
+                cs.playAudio("interesting")
+                response = cv.Vision.callRekognition()
+                cs.pollySays(response)
+            elif "wake up" in command:
+                center()
+                cs.playAudio("hello")
             else:
                 cmdRecognized = False
 
