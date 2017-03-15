@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0e7f94db-d1e5-4d2b-bf1b-53e9b60245e3" name="Default" comment="Redesigned Cortex to use the JOINTMAP file, removing hardcoded references to GPIO pins.&#10;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mfTest.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/RePLMotorFunctions.iml" afterPath="$PROJECT_DIR$/.idea/RePLMotorFunctions.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+    <list default="true" id="0e7f94db-d1e5-4d2b-bf1b-53e9b60245e3" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -42,8 +39,8 @@
       <file leaf-file-name="mfTest.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mfTest.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="23" column="13" lean-forward="true" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+            <state relative-caret-position="476">
+              <caret line="28" column="0" lean-forward="true" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -556,7 +553,14 @@
       <option name="project" value="LOCAL" />
       <updated>1486663318274</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Create MotorFunction test file to use PWM 16 Channel controller">
+      <created>1489602865555</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1489602865555</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -611,7 +615,8 @@
     <MESSAGE value="removed JointMap code" />
     <MESSAGE value="changed from CMUSphinx to Google translate&#10;Update logging" />
     <MESSAGE value="Redesigned Cortex to use the JOINTMAP file, removing hardcoded references to GPIO pins.&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Redesigned Cortex to use the JOINTMAP file, removing hardcoded references to GPIO pins.&#10;" />
+    <MESSAGE value="Create MotorFunction test file to use PWM 16 Channel controller" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create MotorFunction test file to use PWM 16 Channel controller" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -982,8 +987,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mfTest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="13" lean-forward="true" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+        <state relative-caret-position="476">
+          <caret line="28" column="0" lean-forward="true" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
