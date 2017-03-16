@@ -1,0 +1,156 @@
+INFO:root:1489701759.69:: speechrecognition class instantiated 
+
+INFO:root:1489701963.75:: speechrecognition class instantiated 
+
+DEBUG:botocore.credentials:Skipping environment variable credential check because profile name was explicitly set.
+DEBUG:botocore.credentials:Looking for credentials via: assume-role
+DEBUG:botocore.credentials:Looking for credentials via: shared-credentials-file
+INFO:botocore.credentials:Found credentials in shared credentials file: ~/.aws/credentials
+DEBUG:botocore.loaders:Loading JSON file: /usr/local/lib/python2.7/dist-packages/botocore/data/endpoints.json
+DEBUG:botocore.loaders:Loading JSON file: /usr/local/lib/python2.7/dist-packages/botocore/data/rekognition/2016-06-27/service-2.json
+DEBUG:botocore.loaders:Loading JSON file: /usr/local/lib/python2.7/dist-packages/botocore/data/_retry.json
+DEBUG:botocore.client:Registering retry handlers for service: rekognition
+DEBUG:botocore.hooks:Event creating-client-class.rekognition: calling handler <function add_generate_presigned_url at 0x7faf6f8c6aa0>
+INFO:root:1489702292.51:: speechrecognition class instantiated 
+
+DEBUG:botocore.credentials:Skipping environment variable credential check because profile name was explicitly set.
+DEBUG:botocore.credentials:Looking for credentials via: assume-role
+DEBUG:botocore.credentials:Looking for credentials via: shared-credentials-file
+INFO:botocore.credentials:Found credentials in shared credentials file: ~/.aws/credentials
+DEBUG:botocore.loaders:Loading JSON file: /usr/local/lib/python2.7/dist-packages/botocore/data/endpoints.json
+DEBUG:botocore.loaders:Loading JSON file: /usr/local/lib/python2.7/dist-packages/botocore/data/rekognition/2016-06-27/service-2.json
+DEBUG:botocore.loaders:Loading JSON file: /usr/local/lib/python2.7/dist-packages/botocore/data/_retry.json
+DEBUG:botocore.client:Registering retry handlers for service: rekognition
+DEBUG:botocore.hooks:Event creating-client-class.rekognition: calling handler <function add_generate_presigned_url at 0x7f2fcef82aa0>
+DEBUG:botocore.args:The s3 config key is not a dictionary type, ignoring its value of: None
+DEBUG:botocore.endpoint:Setting rekognition timeout as (60, 60)
+DEBUG:botocore.credentials:Skipping environment variable credential check because profile name was explicitly set.
+DEBUG:botocore.credentials:Looking for credentials via: assume-role
+DEBUG:botocore.credentials:Looking for credentials via: shared-credentials-file
+INFO:botocore.credentials:Found credentials in shared credentials file: ~/.aws/credentials
+DEBUG:botocore.loaders:Loading JSON file: /usr/local/lib/python2.7/dist-packages/botocore/data/endpoints.json
+DEBUG:botocore.loaders:Loading JSON file: /usr/local/lib/python2.7/dist-packages/botocore/data/polly/2016-06-10/service-2.json
+DEBUG:botocore.loaders:Loading JSON file: /usr/local/lib/python2.7/dist-packages/botocore/data/_retry.json
+DEBUG:botocore.client:Registering retry handlers for service: polly
+DEBUG:botocore.hooks:Event creating-client-class.polly: calling handler <function add_generate_presigned_url at 0x7f2fcef82aa0>
+DEBUG:botocore.args:The s3 config key is not a dictionary type, ignoring its value of: None
+DEBUG:botocore.endpoint:Setting polly timeout as (60, 60)
+INFO:root:1489706332.98:: speechrecognition class instantiated 
+
+DEBUG:botocore.credentials:Skipping environment variable credential check because profile name was explicitly set.
+DEBUG:botocore.credentials:Looking for credentials via: assume-role
+DEBUG:botocore.credentials:Looking for credentials via: shared-credentials-file
+INFO:botocore.credentials:Found credentials in shared credentials file: ~/.aws/credentials
+DEBUG:botocore.loaders:Loading JSON file: /usr/local/lib/python2.7/dist-packages/botocore/data/endpoints.json
+DEBUG:botocore.loaders:Loading JSON file: /usr/local/lib/python2.7/dist-packages/botocore/data/rekognition/2016-06-27/service-2.json
+DEBUG:botocore.loaders:Loading JSON file: /usr/local/lib/python2.7/dist-packages/botocore/data/_retry.json
+DEBUG:botocore.client:Registering retry handlers for service: rekognition
+DEBUG:botocore.hooks:Event creating-client-class.rekognition: calling handler <function add_generate_presigned_url at 0x7f832eb60aa0>
+DEBUG:botocore.args:The s3 config key is not a dictionary type, ignoring its value of: None
+DEBUG:botocore.endpoint:Setting rekognition timeout as (60, 60)
+DEBUG:botocore.credentials:Skipping environment variable credential check because profile name was explicitly set.
+DEBUG:botocore.credentials:Looking for credentials via: assume-role
+DEBUG:botocore.credentials:Looking for credentials via: shared-credentials-file
+INFO:botocore.credentials:Found credentials in shared credentials file: ~/.aws/credentials
+DEBUG:botocore.loaders:Loading JSON file: /usr/local/lib/python2.7/dist-packages/botocore/data/endpoints.json
+DEBUG:botocore.loaders:Loading JSON file: /usr/local/lib/python2.7/dist-packages/botocore/data/polly/2016-06-10/service-2.json
+DEBUG:botocore.loaders:Loading JSON file: /usr/local/lib/python2.7/dist-packages/botocore/data/_retry.json
+DEBUG:botocore.client:Registering retry handlers for service: polly
+DEBUG:botocore.hooks:Event creating-client-class.polly: calling handler <function add_generate_presigned_url at 0x7f832eb60aa0>
+DEBUG:botocore.args:The s3 config key is not a dictionary type, ignoring its value of: None
+DEBUG:botocore.endpoint:Setting polly timeout as (60, 60)
+INFO:root:
+INFO:root:*******************New RePL instance booting!***********************************
+INFO:root:********************************************************************************
+INFO:root:
+INFO:root:1489707551.75:: speechrecognition class instantiated 
+
+DEBUG:botocore.credentials:Skipping environment variable credential check because profile name was explicitly set.
+DEBUG:botocore.credentials:Looking for credentials via: assume-role
+DEBUG:botocore.credentials:Looking for credentials via: shared-credentials-file
+INFO:botocore.credentials:Found credentials in shared credentials file: ~/.aws/credentials
+DEBUG:botocore.loaders:Loading JSON file: /usr/local/lib/python2.7/dist-packages/botocore/data/endpoints.json
+DEBUG:botocore.loaders:Loading JSON file: /usr/local/lib/python2.7/dist-packages/botocore/data/rekognition/2016-06-27/service-2.json
+DEBUG:botocore.loaders:Loading JSON file: /usr/local/lib/python2.7/dist-packages/botocore/data/_retry.json
+DEBUG:botocore.client:Registering retry handlers for service: rekognition
+DEBUG:botocore.hooks:Event creating-client-class.rekognition: calling handler <function add_generate_presigned_url at 0x7f966b0bdaa0>
+DEBUG:botocore.args:The s3 config key is not a dictionary type, ignoring its value of: None
+DEBUG:botocore.endpoint:Setting rekognition timeout as (60, 60)
+DEBUG:botocore.credentials:Skipping environment variable credential check because profile name was explicitly set.
+DEBUG:botocore.credentials:Looking for credentials via: assume-role
+DEBUG:botocore.credentials:Looking for credentials via: shared-credentials-file
+INFO:botocore.credentials:Found credentials in shared credentials file: ~/.aws/credentials
+DEBUG:botocore.loaders:Loading JSON file: /usr/local/lib/python2.7/dist-packages/botocore/data/endpoints.json
+DEBUG:botocore.loaders:Loading JSON file: /usr/local/lib/python2.7/dist-packages/botocore/data/polly/2016-06-10/service-2.json
+DEBUG:botocore.loaders:Loading JSON file: /usr/local/lib/python2.7/dist-packages/botocore/data/_retry.json
+DEBUG:botocore.client:Registering retry handlers for service: polly
+DEBUG:botocore.hooks:Event creating-client-class.polly: calling handler <function add_generate_presigned_url at 0x7f966b0bdaa0>
+DEBUG:botocore.args:The s3 config key is not a dictionary type, ignoring its value of: None
+DEBUG:botocore.endpoint:Setting polly timeout as (60, 60)
+INFO:root:
+INFO:root:*******************New RePL instance booting!***********************************
+INFO:root:********************************************************************************
+INFO:root:
+DEBUG:root:1489707552.29:: snowboydecoder.py: start(): detecting... 
+
+INFO:root:1489707556.92:: Keyword 1 detected at time: 2017-03-16 18:39:16 
+
+INFO:root:1489707557.05:: __main__.py: NLU Service starting...silence please.. 
+
+INFO:root:1489707558.12:: __main__.py: Set min energy threshold to 373.232831275 
+
+INFO:root:1489707558.12:: __main__.py: You may now issue voice commands! 
+
+INFO:root:1489707564.25:: __main__.py: Received audio data. Attempting to translate Voice to Text now... 
+
+INFO:root:1489707564.3:: Calling Google API... 
+
+INFO:root:1489707564.52:: speechrecognition.py:  received API response 
+
+INFO:root:1489707564.7:: speechrecognition.py: {"result":[]}
+ 
+
+INFO:root:1489707564.7:: cortex.py::processCmd(): received command: i didn't understand that command 
+
+INFO:root:1489707564.7:: __main__.py: Contacting polly to convert command to voice 
+
+DEBUG:botocore.hooks:Event before-parameter-build.polly.SynthesizeSpeech: calling handler <function generate_idempotent_uuid at 0x7f966b0f1488>
+DEBUG:botocore.endpoint:Making request for OperationModel(name=SynthesizeSpeech) (verify_ssl=True) with params: {'body': '{"Text": "I don\'t understand i didn\'t understand that command", "OutputFormat": "ogg_vorbis", "VoiceId": "Emma"}', 'url': u'https://polly.us-east-1.amazonaws.com/v1/speech', 'headers': {'User-Agent': 'Boto3/1.4.4 Python/2.7.12 Linux/4.4.0-66-generic Botocore/1.5.26'}, 'context': {'client_region': 'us-east-1', 'has_streaming_input': False, 'client_config': <botocore.config.Config object at 0x7f966abef110>}, 'query_string': {}, 'url_path': u'/v1/speech', 'method': u'POST'}
+DEBUG:botocore.hooks:Event request-created.polly.SynthesizeSpeech: calling handler <bound method RequestSigner.handler of <botocore.signers.RequestSigner object at 0x7f966abef090>>
+DEBUG:botocore.auth:Calculating signature using v4 auth.
+DEBUG:botocore.auth:CanonicalRequest:
+POST
+/v1/speech
+
+host:polly.us-east-1.amazonaws.com
+x-amz-date:20170316T233924Z
+
+host;x-amz-date
+4ffb1f6cb6e2aaafb95fd59dc3c69bd4bcda20f380df9c209b2738ef608a8fe6
+DEBUG:botocore.auth:StringToSign:
+AWS4-HMAC-SHA256
+20170316T233924Z
+20170316/us-east-1/polly/aws4_request
+be66336af223e22fb12618c2b1204d0d0cbfafc5128d8907ab7b4387fe80ccf6
+DEBUG:botocore.auth:Signature:
+2b42351e4ada183fc42aa4128d7cbe3a038da5229d27c51a9d4dc898344f9480
+DEBUG:botocore.endpoint:Sending http request: <PreparedRequest [POST]>
+INFO:botocore.vendored.requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): polly.us-east-1.amazonaws.com
+DEBUG:botocore.vendored.requests.packages.urllib3.connectionpool:"POST /v1/speech HTTP/1.1" 200 None
+DEBUG:botocore.parsers:Response headers: {'x-amzn-requestid': 'c9eaccd3-0aa1-11e7-b5bb-7f0066506204', 'transfer-encoding': 'chunked', 'x-amzn-requestcharacters': '51', 'content-type': 'audio/ogg', 'date': 'Thu, 16 Mar 2017 23:39:24 GMT'}
+DEBUG:botocore.parsers:Response body:
+<botocore.response.StreamingBody object at 0x7f96688c9fd0>
+DEBUG:botocore.hooks:Event needs-retry.polly.SynthesizeSpeech: calling handler <botocore.retryhandler.RetryHandler object at 0x7f966ac6ed10>
+DEBUG:botocore.retryhandler:No retry needed.
+INFO:root:1489707565.27:: computeSpeech.py: writing the response to speech.ogg. 
+
+ERROR:root:1489707566.37:: __main__.py: TranslateServiceError: Unable to translate audio:  
+
+DEBUG:root:1489707566.43:: snowboydecoder.py: start(): detecting... 
+
+DEBUG:root:1489707619.53:: snowboydecoder.py: start(): detect voice break 
+
+DEBUG:root:1489707619.53:: snowboydecoder.py: start(): finished. 
+
+INFO:root:1489707620.53:: __main__.py: NLU Service starting...silence please.. 
+
