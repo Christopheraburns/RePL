@@ -21,6 +21,7 @@ except ImportError as e:
     logger.LogError("motorFunctions.py: Cannot import the RPi module, install it with pip or this may not be a Raspberry Pi")
 
 DEBUG = False
+
 frequencyHertz = 50  # PWm Frequency
 msPerCycle = 1000 / frequencyHertz  # MilliSeconds per Frequency Cycle
 
