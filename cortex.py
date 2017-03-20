@@ -5,7 +5,7 @@
     to the appropriate module.
 """
 import log
-#import motorFunctions as mf
+import time
 import os
 import computerVision as cv
 import computerSpeech as cs
@@ -13,23 +13,26 @@ import sys
 import ast
 import paho.mqtt.client as mqtt
 
-#Create a logger object
+# Create a logger object
 logger = log.rLog(False)
+
 
 def on_connect(client, userdata, flags, rc):
     print("connected to message queue with result code "+str(rc))
-    client.subscribe("REPL/#")
+    client.subscribe([("REPL_MF/#", 0), ("REPL_PERIPHERALS/#", 0)])
 
-#Callback for when a message is received from the server
+
+# Callback for when a message is received from the server
 def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
 
-#Set up message queue
+# Set up message queue
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
 client.connect("127.0.0.1", 1883, 60)
 client.loop_forever
+
 
 def showHelp():
     if os.path.exists("help"):
@@ -42,40 +45,44 @@ def showHelp():
         cs.callAudible("limit")
         logger.LogError("cortex.py: Help file is missing - cannot display commands")
 
+
 def loadJointMap():
     if os.path.exists("JOINTMAP"):
         print("cortex.py::loadJointMap(): JOINTMAP file found, loading...")
         try:
             with open("JOINTMAP") as f:
                 content = f.read()
-                dJoints = ast.literal_eval(content)
-                return dJoints
+                joints = ast.literal_eval(content)
+                return joints
         except Exception as e:
             print("cortex.py::loadJointMap(): Error loading JOINTMAP - {}".format(e.message))
     else:
         print("cortex.py::loadJointMap(): Unable to find/or open the JOINTMAP")
 
-#Try loading this one time at module load. -
-#TODO add logic to reload JOINTMAP on command
+# Try loading this one time at module load. -
+# TODO add logic to reload JOINTMAP on command
 JOINTMAP = loadJointMap()
 
 
-#Run at Startup to "center" all servos.  Will also run whenever the command "center" is given
+# Run at Startup to "center" all servos.  Will also run whenever the command "center" is given
 def center():
     try:
-        dJoints = loadJointMap()
-        for joint in dJoints["Joints"]:
-            #Move all joints to their respective START_POS
-            logger.LogThis("cortex.py::center(): Centering {}".format(joint["Name"]))
-            #mf.executeMovement(joint["GPIO"],joint["START_POS"])
+        JOINTMAP = loadJointMap()
+        if JOINTMAP is not None:
+            for joint in JOINTMAP["Joints"]:
+                # Move all joints to their respective START_POS
+                logger.LogThis("cortex.py::center(): Centering {}".format(joint["Name"]))
+                client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(joint["START_POS"]) +"}")
+                time.sleep(1)
         else:
             print("cortex.py::center(): Unable to Load JOINTMAP correctly or JOINTMAP is empty")
+            cs.pollySays("I am unable to load my JOINTMAP file correctly")
     except Exception as e:
         logger.LogError("cortex.py::center(): Error: {}".format(e.message))
 
+
 def processCmd(command, voice):
     try:
-        #  Joints = loadJointMap()
         cmdRecognized = True
         if command:
             command = command.lower()
@@ -89,32 +96,35 @@ def processCmd(command, voice):
                     logger.LogThis("Level 2 Keyword 'RIGHT' detected")
                     for joint in JOINTMAP["Joints"]:
                         if joint["Name"] == "NECK_ROTATION":
-                            #mf.executeMovement(joint["GPIO"], joint["LOW"])
-                            pass
+                            client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                joint["LOW"]) + "}")
                 elif "left" in command:                                                     #LOOK LEFT
                     logger.LogThis("Level 1 Keyword 'LEFT' detected")
                     for joint in JOINTMAP["Joints"]:
                         if joint["Name"] == "NECK_ROTATION":
-                            pass
-                            #mf.executeMovement(joint["GPIO"], joint["HIGH"])
-                elif "straight" in command or "strait" or "at me" in command:                          #LOOK Straight ahead
+                            client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                joint["HIGH"]) + "}")
+                elif "straight" in command or "strait" in command or "at me" in command:                          #LOOK Straight ahead
                     for joint in JOINTMAP["Joints"]:
                         if joint["Name"] == "NECK_ROTATION":
-                            pass
-                            #mf.executeMovement(joint["GPIO"], joint["MIDDLE"])
+                            client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                joint["MIDDLE"]) + "}")
                     for joint in JOINTMAP["Joints"]:
                         if joint["Name"] == "NECK_ELEVATION":
-                            pass
+                            client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                joint["MIDDLE"]) + "}")
                             #mf.executeMovement(joint["GPIO"], joint["MIDDLE"])
-                elif "up" in command:                                                       #LOOK UP
+                elif "up" in command or lookup in command:                                                       #LOOK UP
                     for joint in JOINTMAP["Joints"]:
                         if joint["Name"] == "NECK_ELEVATION":
-                            pass
+                            client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                joint["LOW"]) + "}")
                             #mf.executeMovement(joint["GPIO"], joint["LOW"])
                 elif "down" in command:                                 #LOOK DOWN
                     for joint in JOINTMAP["Joints"]:
                         if joint["Name"] == "NECK_ELEVATION":
-                            pass
+                            client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                joint["HIGH"]) + "}")
                             #mf.executeMovement(joint["GPIO"], joint["HIGH"])
                 else:
                     cmdRecognized = False
@@ -123,27 +133,32 @@ def processCmd(command, voice):
                     if "up" in command or "raise" in command:                               #Raise RIGHT ARM
                         for joint in JOINTMAP["Joints"]:
                             if joint["Name"] == "RIGHT_SHOULDER_EXTENSION":
-                                pass
+                                client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                    joint["HIGH"]) + "}")
                                 #mf.executeMovement(joint["GPIO"], joint["HIGH"])
                     elif "down" in command or "lower" in command:                           #Lower the RIGHT ARM
                         for joint in JOINTMAP["Joints"]:
                             if joint["Name"] == "RIGHT_SHOULDER_EXTENSION":
-                                pass
+                                client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                    joint["LOW"]) + "}")
                                 #mf.executeMovement(joint["GPIO"], joint["LOW"])
                     elif "out" in command:                                                  #Extend the RIGHT ARM
                         for joint in JOINTMAP["Joints"]:
                             if joint["Name"] == "RIGHT_SHOULDER_EXTENSION":
-                                pass
+                                client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                    joint["MIDDLE"]) + "}")
                                #mf.executeMovement(joint["GPIO"], joint["MIDDLE"])
                     elif "bend" in command:                                                 #Bend the RIGHT ARM
                         for joint in JOINTMAP["Joints"]:
                             if joint["Name"] == "RIGHT_ELBOW_EXTENSION":
-                                pass
+                                client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                    joint["HIGH"]) + "}")
                                 #mf.executeMovement(joint["GPIO"], joint["HIGH"])
                     elif "straight" in command or "straighten":                             #Straighten the RIGHT ARM
                         for joint in JOINTMAP["Joints"]:
                             if joint["Name"] == "RIGHT_ELBOW_EXTENSION":
-                                pass
+                                client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                    joint["MIDDLE"]) + "}")
                                 #mf.executeMovement(joint["GPIO"], joint["MIDDLE"])
                     else:
                         cmdRecognized = False
@@ -151,27 +166,32 @@ def processCmd(command, voice):
                     if "up" in command or "raise" in command:                               #Raise RIGHT ARM
                         for joint in JOINTMAP["Joints"]:
                             if joint["Name"] == "LEFT_SHOULDER_EXTENSION":
-                                pass
+                                client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                    joint["HIGH"]) + "}")
                                 #mf.executeMovement(joint["GPIO"], joint["HIGH"])
                     elif "down" in command or "lower" in command:                           #Lower the RIGHT ARM
                         for joint in JOINTMAP["Joints"]:
                             if joint["Name"] == "LEFT_SHOULDER_EXTENSION":
-                                pass
+                                client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                    joint["LOW"]) + "}")
                                 #mf.executeMovement(joint["GPIO"], joint["LOW"])
                     elif "out" in command:                                                  #Extend the RIGHT ARM
                         for joint in JOINTMAP["Joints"]:
                             if joint["Name"] == "LEFT_SHOULDER_EXTENSION":
-                                pass
+                                client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                    joint["MIDDLE"]) + "}")
                                 #mf.executeMovement(joint["GPIO"], joint["MIDDLE"])
                     elif "bend" in command:                                                 #Bend the RIGHT ARM
                         for joint in JOINTMAP["Joints"]:
                             if joint["Name"] == "LEFT_ELBOW_EXTENSION":
-                                pass
+                                client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                    joint["LOW"]) + "}")
                                 #mf.executeMovement(joint["GPIO"], joint["LOW"])
                     elif "straight" in command or "straighten" in command:                             #Straighten the RIGHT ARM
                         for joint in JOINTMAP["Joints"]:
                             if joint["Name"] == "LEFT_ELBOW_EXTENSION":
-                                pass
+                                client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                    joint["MIDDLE"]) + "}")
                                 #mf.executeMovement(joint["GPIO"], joint["MIDDLE"])
                     else:
                         cmdRecognized = False
@@ -180,42 +200,52 @@ def processCmd(command, voice):
                     #Raise both Arms
                     for joint in JOINTMAP["Joints"]:
                         if joint["Name"] == "LEFT_SHOULDER_EXTENSION":
-                            pass
+                            client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                joint["LOW"]) + "}")
                             #mf.executeMovement(joint["GPIO"], joint["LOW"])
                         elif joint["Name"] == "RIGHT_SHOULDER_EXTENSION":
-                            pass
+                            client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                joint["HIGH"]) + "}")
                             #mf.executeMovement(joint["GPIO"], joint["HIGH"])
                 elif "down" in command or "lower" in command:                           #put BOTH ARMS down
                     for joint in JOINTMAP["Joints"]:
                         if joint["Name"] == "LEFT_SHOULDER_EXTENSION":
-                            pass
+                            client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                joint["HIGH"]) + "}")
                             #mf.executeMovement(joint["GPIO"], joint["HIGH"])
                         elif joint["Name"] == "RIGHT_SHOULDER_EXTENSION":
-                            pass
+                            client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                joint["LOW"]) + "}")
                             #mf.executeMovement(joint["GPIO"], joint["LOW"])
                 elif "out" in command or "extend" in command:                                      #Extend BOTH ARMS
                     for joint in JOINTMAP["Joints"]:
                         if joint["Name"] == "LEFT_SHOULDER_EXTENSION":
-                            pass
+                            client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                joint["MIDDLE"]) + "}")
                             #mf.executeMovement(joint["GPIO"], joint["MIDDLE"])
                         elif joint["Name"] == "RIGHT_SHOULDER_EXTENSION":
-                            pass
+                            client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                joint["MIDDLE"]) + "}")
                             #mf.executeMovement(joint["GPIO"], joint["MIDDLE"])
                 elif "bend" in command:                                                 #Bend BOTH ARMS
                     for joint in JOINTMAP["Joints"]:
                         if joint["Name"] == "LEFT_ELBOW_EXTENSION":
-                            pass
+                            client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                joint["LOW"]) + "}")
                             #mf.executeMovement(joint["GPIO"], joint["LOW"])
                         elif joint["Name"] == "RIGHT_ELBOW_EXTENSION":
-                            pass
+                            client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                joint["HIGH"]) + "}")
                             #mf.executeMovement(joint["GPIO"], joint["HIGH"])
                 elif "straight" in command or "straighten" in command or "straighter" in command:  #Straighten BOTH ARMS
                     for joint in JOINTMAP["Joints"]:
                         if joint["Name"] == "LEFT_ELBOW_EXTENSION":
-                            pass
+                            client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                joint["MIDDLE"]) + "}")
                             #mf.executeMovement(joint["GPIO"], joint["MIDDLE"])
                         elif joint["Name"] == "RIGHT_ELBOW_EXTENSION":
-                            pass
+                            client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                                joint["MIDDLE"]) + "}")
                             #mf.executeMovement(joint["GPIO"], joint["MIDDLE"])
                 else:
                         cmdRecognized = False
@@ -224,10 +254,11 @@ def processCmd(command, voice):
                     or "terminator" in command \
                     or "shot down" in command:
                 cs.playAudio("shuttingdown")
-                #Lower her head to indicate shutdown mode
+                # Lower her head to indicate shutdown mode
                 for joint in JOINTMAP["Joints"]:
                     if joint["Name"] == "NECK_ELEVATION":
-                        pass
+                        client.publish("REPL_MF", "{\"pin\":" + str(joint["GPIO"]) + ",\"pos\":" + str(
+                            joint["HIGH"]) + "}")
                         #mf.executeMovement(joint["GPIO"], joint["HIGH"])
                 sys.exit()
             elif 'help' in command:

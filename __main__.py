@@ -12,46 +12,33 @@ import pyaudio
 import snowboydetect
 import time
 
-try: #Attempt to Load RPi module - will only work on Pi
-    import RPi.GPIO as GPIO
-except ImportError as e:
-        #logger.LogError(
-        print("__main__.py: Cannot import the RPi module, install it with pip or this may not be a Raspberry Pi")
-
-
 TOP_DIR = os.path.dirname(os.path.abspath(__file__))
 RESOURCE_FILE = os.path.join(TOP_DIR, "resources/common.res")
 
 interrupted = False
-#TODO don't hardcode the model file - pull this from sys.args
+# TODO don't hardcode the model file - pull this from sys.args
 model = "REPL.pmdl"
 
-def turnLEDoff():
-    print("__main__.py::turnLEDoff(): Shutting Down")
 
 def signal_handler(signal, frame):
     global interrupted
     interrupted = True
+
 
 def interrupt_callback():
     global interrupted
     return interrupted
 
 
-#Create a logger object
+# Create a logger object
 logger = log.rLog(True)
 
-#intialize the Speech Recognition engine
+# initialize the Speech Recognition engine
 r = sr.Recognizer()
 m = sr.Microphone()
 
-#initialize the Robot Library
-#Robot = mf.Body()
-#GPIO.setmode(GPIO.BOARD)
-#GPIO.setup(40, GPIO.OUT)
-#GPIO.output(40, GPIO.HIGH)
 
-#Class used by SnowBoy for signal detection
+# Class used by SnowBoy for signal detection
 class RingBuffer(object):
     """Ring buffer to hold audio from PortAudio"""
     def __init__(self, size = 4096):
@@ -67,7 +54,8 @@ class RingBuffer(object):
         self._buf.clear()
         return tmp
 
-#Class used by Snowboy for signal detection
+
+# Class used by Snowboy for signal detection
 class HotwordDetector(object):
     """
     Snowboy decoder to detect whether a keyword specified by `decoder_model`
@@ -109,7 +97,6 @@ class HotwordDetector(object):
         if len(sensitivity) != 0:
             self.detector.SetSensitivity(sensitivity_str)
 
-
     def start(self, detected_callback=None,
               interrupt_check=lambda: False,
               sleep_time=0.03):
@@ -147,7 +134,6 @@ class HotwordDetector(object):
             frames_per_buffer=2048,
             stream_callback=audio_callback)
 
-
         if interrupt_check():
             logger.LogDebug("snowboydecoder.py: start(): detect voice return")
             return
@@ -179,6 +165,7 @@ class HotwordDetector(object):
             elif ans == -2:
                 pass
             elif ans > 0:
+                cortex.client.publish("REPL_PERIPHERALS", "{\"name\":\"keyword\",\"GPIO\":17,\"state\":\"GPIO.HIGH\"}")
                 message = "Keyword " + str(ans) + " detected at time: "
                 message += time.strftime("%Y-%m-%d %H:%M:%S",
                                          time.localtime(time.time()))
@@ -188,7 +175,6 @@ class HotwordDetector(object):
                     callback()
 
         logger.LogDebug("snowboydecoder.py: start(): finished.")
-
 
     def terminate(self):
         """
@@ -201,24 +187,29 @@ class HotwordDetector(object):
 
 detector = HotwordDetector(model, sensitivity=0.5)
 
-#function executed AFTER keyword detected - switched from SnowBoy keyword detector to send speech to NLP service
+
+# function executed AFTER keyword detected - switched from SnowBoy keyword detector to send speech to NLP service
 def listenVoiceCmd():
+    # Light up the eyes to indicate she heard the keyword
+    cortex.client.publish("REPL_PERIPHERALS", "{\"name\":\"keyword\",\"GPIO\":17,\"state\":\"GPIO.HIGH\"}")
     strValue = None
     try:
         detector.terminate()  #Turn off snowboy to allow sf to access the mic
+
         timer = 1
-        while timer < 10: #creat timer
-            logger.LogThis("__main__.py: NLU Service starting...silence please..")
+        while timer < 10:
+            # logger.LogThis("__main__.py: NLU Service starting...silence please..")
             with m as source: r.adjust_for_ambient_noise(source)
-            logger.LogThis("__main__.py: Set min energy threshold to {}".format(r.energy_threshold))
+            # logger.LogThis("__main__.py: Set min energy threshold to {}".format(r.energy_threshold))
             while True:
+
                 logger.LogThis("__main__.py: You may now issue voice commands!")
                 with m as source: audio = r.listen(source)
 
                 logger.LogThis ("__main__.py: Received audio data. Attempting to translate Voice to Text now...")
                 try:
+                    cortex.client.publish("REPL_PERIPHERALS","{\"name\":\"keyword\",\"GPIO\":17,\"state\":\"GPIO.LOW\"}")
                     value = r.recognize_google(audio)
-
                     if str is bytes:  # this version of Python uses bytes for strings (Python 2)
                         strValue = value.encode("utf-8")
                     else:  # this version of Python uses unicode for strings (Python 3+)
@@ -229,10 +220,11 @@ def listenVoiceCmd():
                     logger.LogThis("Re-enabling SnowBoy")
                     break
                 except sr.UnknownValueError as e:
-                    cortex.processCmd("I didn't understand that command", True)
+                    # cortex.processCmd("I didn't understand that command", True)
+                    cortex.client.publish("REPL_PERIPHERALS","{\"name\":\"keyword\",\"GPIO\":17,\"state\":\"GPIO.LOW\"}")
                     logger.LogError("__main__.py: TranslateServiceError: Unable to translate audio: {}".format(e.message))
                 except sr.RequestError as e:
-                    cortex.callAudible("limit")
+                    cortex.client.publish("REPL_PERIPHERALS","{\"name\":\"keyword\",\"GPIO\":17,\"state\":\"GPIO.LOW\"}")
                     logger.LogError("__main__.py: TranslateServiceError: Unable to access NLP service {}".format(e.message))
                 break
             wakeOnKeyword()# turn snowboy back on
@@ -241,11 +233,13 @@ def listenVoiceCmd():
 
         wakeOnKeyword()  # turn snowboy back on
     except KeyboardInterrupt:
+        ###
+        cortex.client.publish("REPL_PERIPHERALS", "{\"name\":\"keyword\",\"GPIO\":17,\"state\":\"GPIO.LOW\"}")
         logger.LogThis("__main__.py: listenVoiceCmd(): Ctrl+C sig received. Exiting")
         sys.exit()
 
-#function to detect keyword and make callback to NLP function
-#TODO - Add code here for LED to recognize the keyword and give visual feedback that it is okay to being speaking.
+# function to detect keyword and make callback to NLP function
+# TODO - Add code here for LED to recognize the keyword and give visual feedback that it is okay to being speaking.
 def wakeOnKeyword():
     try:
         signal.signal(signal.SIGINT, signal_handler)
@@ -253,14 +247,14 @@ def wakeOnKeyword():
         detector.start(detected_callback=listenVoiceCmd,
                        interrupt_check=interrupt_callback,
                        sleep_time=0.03)
-    except Exception as e:
-        cortex.callAudible("limit")
-        logger.LogError("__main__.py: wakeOnKeyword(): Error: {}".format(e))
+    except Exception as err:
+        logger.LogError("__main__.py: wakeOnKeyword(): Error: {}".format(err))
     except KeyboardInterrupt:
         logger.LogThis("__main__.py: wakeOnKeyword(): Ctrl-C interrupt")
         sys.exit()
 
-#Main - look for the voice argument, as well as the model file to use with Snowboy.
+
+# Main - look for the voice argument, as well as the model file to use with Snowboy.
 def main(init):
     try:
         if len(sys.argv) == 1:
@@ -274,13 +268,11 @@ def main(init):
         else:
             global model
             model = sys.argv[1]
-            #cortex.center()
+            cortex.center()
             wakeOnKeyword()
     except KeyboardInterrupt:
         logger.LogThis("__main__.py: main(): Ctrl-C interrupt")
         sys.exit()
-
-atexit.register(turnLEDoff)
 
 if __name__ == "__main__":
     main(True)

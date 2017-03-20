@@ -1,35 +1,36 @@
-#2/3/17
-#Chris Burns @Forecast_Cloudy
-"""
-    The Computerspeech module will coordinate all activites that require speech from AWS Polly service
-"""
-#TODO: Incorporate a grammar library for proper grammar when speaking results of commands
-#TODO: Take a look at this one:
-#TODO: pip install --user --upgrade grammar-check
-#TODO: https://pypi.python.org/pypi/grammar-check
+# 2/3/17 The Computerspeech module will coordinate all activites that require speech from AWS Polly service
+# Chris Burns @Forecast_Cloudy
+
+# TODO: Incorporate a grammar library for proper grammar when speaking results of commands
+# TODO: Take a look at this one:
+# TODO: pip install --user --upgrade grammar-check
+# TODO: https://pypi.python.org/pypi/grammar-check
 
 import log
 from boto3 import Session
 from botocore.exceptions import BotoCoreError, ClientError
 import os
 import pygame.mixer
-from pygame.mixer import Sound
 from contextlib import closing
 import time
 
-#Create an AWS Client obj
+# Create an AWS Client obj
 session = Session(profile_name="default")
 polly = session.client("polly")
 
-#Create a logger object
+# Create a logger object
 logger = log.rLog(False)
 
+
 def callAudible(wav):
-    pygame.mixer.init()
+    pygame.init()
     if wav.lower() == "ack":
-        Sound("audio/ack.wav")
+        pygame.mixer.music.load('audio/ack.wav')
+        pygame.mixer.music.play()
+        time.sleep(1)
     elif wav.lower() == "limit":
-        Sound("audio/limit.wav")
+        pygame.mixer.music.load('audio/limit.wav')
+        pygame.mixer.music.play()
 
 
 def pollySays(value):
@@ -44,13 +45,15 @@ def pollySays(value):
                     logger.LogThis("computeSpeech.py: writing the response to speech.ogg.")
                     with open(output, "wb") as file:
                         file.write(stream.read())
-                    pygame.mixer.init()
-                    cmd = Sound("speech.ogg")
-                    cmd.play()
                 except IOError as e:
                     # Could not write to file
-                    callAudible("limit")
+                    # callAudible("limit")
                     logger.LogError("computeSpeech.py: IOError: {}".format(e.message))
+
+            pygame.mixer.init()
+            pygame.mixer.music.load('speech.ogg')
+            pygame.mixer.music.play()
+            time.sleep(1)
         else:
             # The response didn't contain audio data, exit gracefully
             logger.LogThis("computeSpeech.py: Response did not contain audio!")
@@ -61,13 +64,14 @@ def pollySays(value):
     except KeyboardInterrupt:
         logger.LogThis("computeSpeech.py: PollySays(): Ctrl-C interrupt")
 
-#Use some pre-recorded soundbytes to fill in time delay gaps
+
+# Use some pre-recorded soundbytes to fill in time delay gaps
 def playAudio(audioFile):
     try:
         pygame.mixer.init()
         path = "audio/" + audioFile + ".ogg"
-        cmd = Sound(path)
-        cmd.play()
+        pygame.mixer.music.load(path)
+        pygame.mixer.music.play()
         time.sleep(1)
     except Exception as e:
         logger.LogError("computerspeech.py: playAudio(): Unable to play:".format(e))
