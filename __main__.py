@@ -191,7 +191,7 @@ detector = HotwordDetector(model, sensitivity=0.5)
 # function executed AFTER keyword detected - switched from SnowBoy keyword detector to send speech to NLP service
 def listenVoiceCmd():
     # Light up the eyes to indicate she heard the keyword
-    cortex.client.publish("REPL_PERIPHERALS", "{\"name\":\"keyword\",\"GPIO\":17,\"state\":\"GPIO.HIGH\"}")
+
     strValue = None
     try:
         detector.terminate()  #Turn off snowboy to allow sf to access the mic
@@ -202,7 +202,7 @@ def listenVoiceCmd():
             with m as source: r.adjust_for_ambient_noise(source)
             # logger.LogThis("__main__.py: Set min energy threshold to {}".format(r.energy_threshold))
             while True:
-
+                cortex.client.publish("REPL_PERIPHERALS", "{\"name\":\"keyword\",\"GPIO\":17,\"state\":\"GPIO.HIGH\"}")
                 logger.LogThis("__main__.py: You may now issue voice commands!")
                 with m as source: audio = r.listen(source)
 

@@ -272,6 +272,12 @@ def processCmd(command, voice):
                 cs.playAudio("interesting")
                 response = cv.Vision.callRekognition()
                 cs.pollySays(response)
+            elif "who am i" in command:
+                #todo - if chris then say:
+                cs.pollySays("You are the maker")
+            elif "who is this" in command:
+                cv.Vision.takeSinglePicture()
+                #todo match picture to database of pictures
             elif "wake up" in command:
                 center()
                 cs.playAudio("hello")
