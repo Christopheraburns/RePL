@@ -1,0 +1,8 @@
+REPL_PROPULSION
+{“direction”:”FORWARD/BACKWARD”, “speed”:2-255, “duration”:1-?}
+
+REPL_MF (Motor Functions)
+{“pin”:0-16,”pos”:150-160} – Must use the Joint map and be aware of limits for certain joints.
+
+REPL_PERIPHERALS
+{“name”:”keyword”,”GPIO”:0-40,”state”:”GPIO.HIGH/GPIO.LOW”}

@@ -1,0 +1,10 @@
+<lexicon
+  version="1.0"
+  alphabet="x-sampa"
+  xml:lang="en"
+  xmlns="http://www.w3.org/2005/01/pronunciation-lexicon">
+   <lexeme>
+      <grapheme>WYSIWYG</grapheme>
+      <phoneme>Wiz-E-Wig</phoneme>
+   </lexeme>
+</lexicon>
